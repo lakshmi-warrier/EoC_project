@@ -1,13 +1,3 @@
-/*
-Enter absolute path of asm/hack file
-read file
-big loop that runs while !hasNextLine
-
-read line by line, use hashtable, convert A to C - string manipulation
-
-save the code to a new .hack file
-*/
-
 import java.io.*;
 import java.util.*;
 

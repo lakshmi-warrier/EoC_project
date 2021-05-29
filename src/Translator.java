@@ -149,9 +149,8 @@ class Translator {
                             return (push_ptr(Integer.parseInt(i)));
                         else if (segment.equals("temp"))
                             return (push_temp(Integer.parseInt(i)));
-
                         else
-                            return (push(segment, Integer.parseInt(i)));
+                            return "No segment" + segment + "found";
                     }
                 } else if (VMcommand[0].equals("pop")) {
                     if (segment.equals("argument"))
@@ -169,7 +168,7 @@ class Translator {
                     else if (segment.equals("temp"))
                         return (pop_temp(Integer.parseInt(i)));
                     else
-                        return (push(segment, Integer.parseInt(i)));
+                        return "No segment" + segment + "found";
                 } else if (VMcommand[0].equals("function"))
                     return ALOps.function(segment, Integer.parseInt(VMcommand[2]));
                 else if (VMcommand[0].equals("call"))
@@ -186,18 +185,8 @@ class Translator {
         return "";
     }
 
-    static String push(String segment, int index) {
-
-        String code = "//push " + segment + " " + index + "\n@" + index + "\nD=A\n";
-
-        return code + "@" + segment + "\n" + "A=M\n" + "D=D+A\nA=D\n" + "D=M\n" + "@SP\n" + "A=M\n" + "M=D\n" + "@SP\n"
-                + "M=M+1\n";
-    }
-
     static String push_const(int index) {
-
         return "//push constant " + index + "\n@" + index + "\nD=A\n@SP\nA=M\nM=D\n@SP\nM=M+1";
-
     }
 
     static String push_arg(int index) {
@@ -230,38 +219,89 @@ class Translator {
     }
 
     static String pop_arg(int index) {
-        return "//pop arugument " + index + "\n@ARG\nD=M\n@" + index + "\nD=D+A\n" + "@R14\n" + "M=D\n" + "@SP\n"
-                + "AM=M-1\n" + "D=M\n" + "@R14\n" + "A=M\n" + "M=D\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//pop arugument " + index);
+        sb.append("\n@ARG");
+        sb.append("\n@" + index);
+        sb.append("\nD=D+A");
+
+        return pop_final(sb);
     }
 
     static String pop_loc(int index) {
-        return "//pop local " + index + "\n@LCL\nD=M\n@" + index + "\nD=D+A\n" + "@R14\n" + "M=D\n" + "@SP\n"
-                + "AM=M-1\n" + "D=M\n" + "@R14\n" + "A=M\n" + "M=D\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//pop local " + index);
+        sb.append("\n@LCL");
+        sb.append("\n@" + index);
+        sb.append("\nD=D+A");
+
+        return pop_final(sb);
     }
 
     static String pop_this(int index) {
-        return "//pop this " + index + "\n@THIS\nD=M\n@" + index + "\nD=D+A\n" + "@R14\n" + "M=D\n" + "@SP\n"
-                + "AM=M-1\n" + "D=M\n" + "@R14\n" + "A=M\n" + "M=D\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//pop this " + index);
+        sb.append("\n@THIS");
+        sb.append("\nD=M");
+        sb.append("\n@" + index);
+        sb.append("\nD=D+A");
+
+        return pop_final(sb);
     }
 
     static String pop_that(int index) {
-        return "//pop that " + index + "\n@THAT\nD=M\n@" + index + "\nD=D+A\n" + "@R14\n" + "M=D\n" + "@SP\n"
-                + "AM=M-1\n" + "D=M\n" + "@R14\n" + "A=M\n" + "M=D\n";
+        // call pop final
+        StringBuilder sb = new StringBuilder();
+        sb.append("//pop that " + index);
+        sb.append("\n@THAT");
+        sb.append("\nD=M");
+        sb.append("\n@" + index);
+        sb.append("\nD=D+A");
+
+        return pop_final(sb);
     }
 
     static String pop_static(int index) {
-        return "//pop static " + index + "\n@" + currFileName + ".static." + index + "\n" + "D=A\n" + "@R14\n" + "M=D\n"
-                + "@SP\n" + "AM=M-1\n" + "D=M\n" + "@R14\n" + "A=M\n" + "M=D\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//pop static " + index);
+        sb.append("\n@" + currFileName + ".static." + index + "\n");
+        sb.append("D=A\n");
+
+        return sb.toString();
+    }
+
+    static String pop_final(StringBuilder sb) {
+        sb.append("@R14\n");
+        sb.append("M=D\n");
+        sb.append("@SP\n");
+        sb.append("AM=M-1\n");
+        sb.append("D=M\n");
+        sb.append("@R14\n");
+        sb.append("A=M\n");
+        sb.append("M=D\n");
+
+        return sb.toString();
     }
 
     static String pop_ptr(int index) {
-        return "//pop pointer " + index + "\n@3\nD=A\n@" + index + "\nD=D+A\n" + "@R14\n" + "M=D\n" + "@SP\n"
-                + "AM=M-1\n" + "D=M\n" + "@R14\n" + "A=M\n" + "M=D\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//pop pointer " + index);
+        sb.append("\n@3");
+        sb.append("\nD=A");
+        sb.append("\n@" + index);
+        sb.append("\nD=D+A");
+
+        return pop_final(sb);
     }
 
     static String pop_temp(int index) {
-        return "//pop temp " + index + "\n@5\nD=A\n@" + index + "\nD=D+A\n" + "@R14\n" + "M=D\n" + "@SP\n" + "AM=M-1\n"
-                + "D=M\n" + "@R14\n" + "A=M\n" + "M=D\n";
-    }
+        StringBuilder sb = new StringBuilder();
+        sb.append("//pop temp " + index);
+        sb.append("\n@5");
+        sb.append("\nD=A");
+        sb.append("\n@" + index);
+        sb.append("\nD=D+A");
 
+        return pop_final(sb);
+    }
 }
