@@ -20,14 +20,14 @@ class Translator {
                     if (extension.equals(".vm"))
                         VMfiles.add(file);
                 } catch (StringIndexOutOfBoundsException e) {
-                    // if the folder contains no files, an index out of bound exception is thrown bcz of missing '.'
+                    // if the folder contains no files, an index out of bound exception is thrown
+                    // bcz of missing '.'
                     System.out.println("Can't find any files in the path. Please check the path\nClosing program");
                     System.exit(0);
 
                 }
             }
-        }
-        else {
+        } else {
             System.out.println("Not a directory, abort");
             System.exit(0);
         }
@@ -40,8 +40,7 @@ class Translator {
         if (VMfiles.size() == 0) {
             System.out.println("Can't find any VM files in the directory mentioned. \nClosing program");
             System.exit(0);
-        }
-        else {
+        } else {
             // bootstrap code
             asm = "@256\n" + "D=A\n" + "@SP\n" + "M=D\n" + ALOps.call("Sys.init", "0") + "0;JMP\n";
 
@@ -156,23 +155,36 @@ class Translator {
                             return "No segment" + segment + "found";
                     }
                 } else if (VMcommand[0].equals("pop")) {
-                    if (segment.equals("argument"))
-                        return (pop_arg(Integer.parseInt(i)));
-                    else if (segment.equals("local"))
-                        return (pop_loc(Integer.parseInt(i)));
-                    else if (segment.equals("this"))
-                        return (pop_this(Integer.parseInt(i)));
-                    else if (segment.equals("that"))
-                        return (pop_that(Integer.parseInt(i)));
-                    else if (segment.equals("static"))
-                        return (pop_static(Integer.parseInt(i)));
-                    else if (segment.equals("pointer"))
-                        return (pop_ptr(Integer.parseInt(i)));
-                    else if (segment.equals("temp"))
-                        return (pop_temp(Integer.parseInt(i)));
-                    else
-                        return "No segment" + segment + "found";
-                } else if (VMcommand[0].equals("function"))
+                    int ind = Integer.parseInt(i);
+
+                    switch (segment) {
+                        case "argument":
+                            return pop_arg(ind);
+
+                        case "local":
+                            return pop_loc(ind);
+
+                        case "this":
+                            return pop_this(ind);
+
+                        case "that":
+                            return pop_that(ind);
+                        
+                        case "static":
+                            return pop_static(ind);
+
+                        case "pointer":
+                            return pop_ptr(ind);
+
+                        case "temp":
+                            return pop_temp(ind);
+
+                        default:
+                            return " no segment "+segment+" found";
+                    }
+                }
+
+                    else if (VMcommand[0].equals("function"))
                     return ALOps.function(segment, Integer.parseInt(VMcommand[2]));
                 else if (VMcommand[0].equals("call"))
                     return ALOps.call(segment, VMcommand[2]);
@@ -201,6 +213,7 @@ class Translator {
         sb.append("\n@SP");
         sb.append("\nM=M+1");
 
+        System.out.println(sb.toString());
         return sb.toString();
     }
 
@@ -247,12 +260,16 @@ class Translator {
     static String push_static(int index) {
         StringBuilder sb = new StringBuilder();
         sb.append("//push static " + index);
-        sb.append("\n@5");
-        sb.append("\nD=A");
         sb.append("\n@" + currFileName + ".static." + index);
 
-        return push_final(sb);
-    }
+sb.append("\nD=M");
+        sb.append("\n@SP");
+        sb.append("\nA=M");
+        sb.append("\nM=D");
+        sb.append("\n@SP");
+        sb.append("\nM=M+1");
+
+        return sb.toString();    }
 
     static String push_ptr(int index) {
         StringBuilder sb = new StringBuilder();
@@ -275,6 +292,8 @@ class Translator {
     }
 
     static String push_final(StringBuilder sb) {
+        // appends the common lines
+
         sb.append("\nA=D+A");
         sb.append("\nD=M");
         sb.append("\n@SP");
@@ -335,7 +354,7 @@ class Translator {
         sb.append("\n@" + currFileName + ".static." + index + "\n");
         sb.append("D=A\n");
 
-        return sb.toString();
+        return pop_final(sb);
     }
 
     static String pop_ptr(int index) {
@@ -361,7 +380,7 @@ class Translator {
     }
 
     static String pop_final(StringBuilder sb) {
-        // appends the common line
+        // appends the common lines
         sb.append("\n@R14\n");
         sb.append("M=D\n");
         sb.append("@SP\n");
