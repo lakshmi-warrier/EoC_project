@@ -20,12 +20,16 @@ class Translator {
                     if (extension.equals(".vm"))
                         VMfiles.add(file);
                 } catch (StringIndexOutOfBoundsException e) {
-                    // if the folder contains no files, an index out of bound exception is thrown
+                    // if the folder contains no files, an index out of bound exception is thrown bcz of missing '.'
                     System.out.println("Can't find any files in the path. Please check the path\nClosing program");
                     System.exit(0);
 
                 }
             }
+        }
+        else {
+            System.out.println("Not a directory, abort");
+            System.exit(0);
         }
 
         outFileName = in.getName();
@@ -36,9 +40,8 @@ class Translator {
         if (VMfiles.size() == 0) {
             System.out.println("Can't find any VM files in the directory mentioned. \nClosing program");
             System.exit(0);
-
         }
-        if (VMfiles.size() >= 1) {
+        else {
             // bootstrap code
             asm = "@256\n" + "D=A\n" + "@SP\n" + "M=D\n" + ALOps.call("Sys.init", "0") + "0;JMP\n";
 
@@ -191,8 +194,14 @@ class Translator {
         StringBuilder sb = new StringBuilder();
         sb.append("//push constant " + index);
         sb.append("\n@" + index);
+        sb.append("\nD=A");
+        sb.append("\n@SP");
+        sb.append("\nA=M");
+        sb.append("\nM=D");
+        sb.append("\n@SP");
+        sb.append("\nM=M+1");
 
-        return push_final(sb);
+        return sb.toString();
     }
 
     static String push_arg(int index) {
