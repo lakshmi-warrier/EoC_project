@@ -106,26 +106,8 @@ class Translator {
 
         String op = VMcommand[0];
         if (VMcommand.length == 1) {
-            if (op.equals("add"))
-                return (ALOps.add());
-            else if (op.equals("sub"))
-                return (ALOps.sub());
-            else if (op.equals("or"))
-                return (ALOps.or());
-            else if (op.equals("and"))
-                return (ALOps.and());
-            else if (op.equals("eq"))
-                return (ALOps.eq());
-            else if (op.equals("neg"))
-                return (ALOps.neg());
-            else if (op.equals("lt"))
-                return (ALOps.lt());
-            else if (op.equals("gt"))
-                return (ALOps.gt());
-            else if (op.equals("not"))
-                return (ALOps.not());
-            else if (op.equals("return"))
-                return ALOps.Return();
+            return ALOps.ops(op.trim());
+    
         } else {
             String segment = VMcommand[1];
 
