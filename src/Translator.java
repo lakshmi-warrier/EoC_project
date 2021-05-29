@@ -185,39 +185,99 @@ class Translator {
         return "";
     }
 
+    // --------push statements ---------
+
     static String push_const(int index) {
-        return "//push constant " + index + "\n@" + index + "\nD=A\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push constant " + index);
+        sb.append("\n@" + index);
+
+        return push_final(sb);
     }
 
     static String push_arg(int index) {
-        return "//push arugument " + index + "\n@ARG\nD=M\n@" + index + "\nA=D+A\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push argument " + index);
+        sb.append("\n@ARG");
+        sb.append("\nD=M");
+        sb.append("\n@" + index);
+
+        return push_final(sb);
     }
 
     static String push_loc(int index) {
-        return "//push local " + index + "\n@LCL\nD=M\n@" + index + "\nA=D+A\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push local " + index);
+        sb.append("\n@LCL");
+        sb.append("\nD=M");
+        sb.append("\n@" + index);
+
+        return push_final(sb);
     }
 
     static String push_this(int index) {
-        return "//push this " + index + "\n@THIS\nD=M\n@" + index + "\nA=D+A\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push this " + index);
+        sb.append("\n@THIS");
+        sb.append("\nD=M");
+        sb.append("\n@" + index);
+
+        return push_final(sb);
     }
 
     static String push_that(int index) {
-        return "//push that " + index + "\n@THAT\nD=M\n@" + index + "\nA=D+A\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push that " + index);
+        sb.append("\n@THAT");
+        sb.append("\nD=M");
+        sb.append("\n@" + index);
+
+        return push_final(sb);
     }
 
     static String push_static(int index) {
-        return "//push static " + index + "\n@" + currFileName + ".static." + index
-                + "\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push static " + index);
+        sb.append("\n@5");
+        sb.append("\nD=A");
+        sb.append("\n@" + currFileName + ".static." + index);
+
+        return push_final(sb);
     }
 
     static String push_ptr(int index) {
-        return "//push pointer " + index + "\n@3\nD=A\n@" + index + "\nA=D+A\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push pointer " + index);
+        sb.append("\n@3");
+        sb.append("\nD=A");
+        sb.append("\n@" + index);
+
+        return push_final(sb);
     }
 
     static String push_temp(int index) {
-        return "//push temp " + index + "\n@5\nD=A\n@" + index + "\nA=D+A\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1";
+        StringBuilder sb = new StringBuilder();
+        sb.append("//push temp " + index);
+        sb.append("\n@5");
+        sb.append("\nD=A");
+        sb.append("\n@" + index);
+
+        return push_final(sb);
     }
 
+    static String push_final(StringBuilder sb) {
+        sb.append("\nA=D+A");
+        sb.append("\nD=M");
+        sb.append("\n@SP");
+        sb.append("\nA=M");
+        sb.append("\nM=D");
+        sb.append("\n@SP");
+        sb.append("\nM=M+1");
+
+        return sb.toString();
+    }
+
+    // --------pop statements ---------
     static String pop_arg(int index) {
         StringBuilder sb = new StringBuilder();
         sb.append("//pop arugument " + index);
@@ -250,7 +310,6 @@ class Translator {
     }
 
     static String pop_that(int index) {
-        // call pop final
         StringBuilder sb = new StringBuilder();
         sb.append("//pop that " + index);
         sb.append("\n@THAT");
@@ -266,19 +325,6 @@ class Translator {
         sb.append("//pop static " + index);
         sb.append("\n@" + currFileName + ".static." + index + "\n");
         sb.append("D=A\n");
-
-        return sb.toString();
-    }
-
-    static String pop_final(StringBuilder sb) {
-        sb.append("@R14\n");
-        sb.append("M=D\n");
-        sb.append("@SP\n");
-        sb.append("AM=M-1\n");
-        sb.append("D=M\n");
-        sb.append("@R14\n");
-        sb.append("A=M\n");
-        sb.append("M=D\n");
 
         return sb.toString();
     }
@@ -304,4 +350,19 @@ class Translator {
 
         return pop_final(sb);
     }
+
+    static String pop_final(StringBuilder sb) {
+        // appends the common line
+        sb.append("\n@R14\n");
+        sb.append("M=D\n");
+        sb.append("@SP\n");
+        sb.append("AM=M-1\n");
+        sb.append("D=M\n");
+        sb.append("@R14\n");
+        sb.append("A=M\n");
+        sb.append("M=D\n");
+
+        return sb.toString();
+    }
+
 }
