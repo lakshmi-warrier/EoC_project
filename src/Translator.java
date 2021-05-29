@@ -261,8 +261,7 @@ class Translator {
         StringBuilder sb = new StringBuilder();
         sb.append("//push static " + index);
         sb.append("\n@" + currFileName + ".static." + index);
-
-sb.append("\nD=M");
+        sb.append("\nD=M");
         sb.append("\n@SP");
         sb.append("\nA=M");
         sb.append("\nM=D");
