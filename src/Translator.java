@@ -1,5 +1,4 @@
 import java.util.*;
-
 import java.io.*;
 
 class Translator {
@@ -268,7 +267,8 @@ class Translator {
         sb.append("\n@SP");
         sb.append("\nM=M+1");
 
-        return sb.toString();    }
+        return sb.toString();   
+     }
 
     static String push_ptr(int index) {
         StringBuilder sb = new StringBuilder();
