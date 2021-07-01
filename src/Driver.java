@@ -8,6 +8,7 @@ public class Driver {
         String inFolderPath = sc.nextLine();
         sc.close();
 
+        JackAnalyzer.jackAnalyser(inFolderPath);
         String translatedPath = Translator.translatorMain(inFolderPath);
         Assembler.AssemblerMain(translatedPath);
     }
