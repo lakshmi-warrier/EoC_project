@@ -24,35 +24,38 @@ class JackAnalyzer {
                     System.exit(0);
                 }
 
-                String finalCode = "";
                 for (File jFile : JackFiles) {
+                    String finalCode = "";
+
                     String outFileName = jFile.getName();
                     String outFilePath = inFolderPath + "\\" + outFileName.substring(0, outFileName.length() - 5)
                             + ".xml";
+                    File output = new File(outFilePath);
+                    FileWriter myWriter;
 
                     try {
                         Scanner read_File = new Scanner(jFile);
-                        finalCode = Tokenizer.JackTokenizer(read_File.nextLine());
-                        System.out.println(finalCode);
-                    } catch (FileNotFoundException e1) {
+                        myWriter = new FileWriter(output);
+
+                        while (read_File.hasNextLine()) {
+
+                            String currentLine = read_File.nextLine();
+                            System.out.println("-----"+currentLine+" line41");
+                            finalCode = Tokenizer.JackTokenizer(currentLine);
+                            System.out.println("----FINAL----\n" + finalCode+"\n----");
+
+
+                            myWriter.write(finalCode);
+
+                            System.out.println(finalCode);
+                        }
+                        myWriter.close();
+                    } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
 
-                
                     System.out.println(outFilePath);
-                    File output = new File(outFilePath);
-                    FileWriter myWriter;
-                    try {
-                        myWriter = new FileWriter(output);
-
-                        //String finalCode = Tokenizer.JackTokenizer("method Fraction foo ( int y ) { } ");
-                        myWriter.write(finalCode);
-                        myWriter.close();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
                 }
             }
         } else {

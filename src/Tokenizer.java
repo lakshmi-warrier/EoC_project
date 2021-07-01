@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class Tokenizer {
     // static ArrayList<String> CodeLine;
 
-    static String[] CodeLine;
+    static String[] tokenList;
     static List<String> keywords;
     static List<String> numbers;
     static int no;
@@ -36,33 +36,32 @@ public class Tokenizer {
         return keywords;
     }
 
-    static String JackTokenizer(String token) {
+    static String JackTokenizer(String codeLine) {
         String finalCode = "";
-        token = Utils.code_cleaner(token); // for comment and whitespace handling
+        codeLine = Utils.code_cleaner(codeLine); // for comment and whitespace handling
         // CodeLine =Utils.tokenise(token); // split into array lists
 
-        CodeLine = token.split(" ");
-        for (String line : CodeLine) {
+        tokenList = codeLine.split(" ");
+        for (String token : tokenList) {
             // System.out.println("Line 41: " + line);
-            if (isNumeric(line)) {
-                token = IntegerConstant(line);
+            if (isNumeric(token)) {
+                token = IntegerConstant(token);
 
-            } else if (isSymbol(line)) {
-                token = Symbols(line);
+            } else if (isSymbol(token)) {
+                token = Symbols(token);
 
-            } else if (isStringConstant(line)) {
-                token = stringConstant(line.substring(1, line.length() - 1));
+            } else if (isStringConstant(token)) {
+                token = stringConstant(token.substring(1, token.length() - 1));
 
-            } else if (isKeyword(line)) {
-                token = statements(line);
+            } else if (isKeyword(token)) {
+                token = statements(token);
 
             } else {
-                token = Identifiers(line);
+                token = Identifiers(token);
 
             }
             finalCode += token + "\n";
         }
-        System.out.println("----FINAL----\n" + finalCode);
         return finalCode;
     }
 
