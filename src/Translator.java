@@ -19,7 +19,8 @@ class Translator {
                     if (extension.equals(".vm"))
                         VMfiles.add(file);
                 } catch (StringIndexOutOfBoundsException e) {
-                    // if the folder contains no files, index out of bound exception is thrown as ',' is missing
+                    // if the folder contains no files, index out of bound exception is thrown as
+                    // ',' is missing
                     System.out.println("Can't find any files in the path. Please check the path\nClosing program");
                     System.exit(0);
                 }
@@ -54,7 +55,7 @@ class Translator {
 
                     while (sc.hasNextLine()) {
                         String line = sc.nextLine();
-                        line = string_cleaner(line);
+                        line = Utils.code_cleaner(line);
                         String code = code_generator(line).trim();
                         if (code != null)
                             asm += code + "\n";
@@ -87,25 +88,13 @@ class Translator {
         }
     }
 
-    static String string_cleaner(String s) {
-        String newString = "";
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '/')
-                break;
-            else
-                newString += s.charAt(i);
-        }
-
-        return newString.strip();
-    }
-
     static String code_generator(String VM) {
         String[] VMcommand = VM.split(" "); // To Handle push and pop segment i
 
         String op = VMcommand[0];
         if (VMcommand.length == 1) {
             return ALOps.ops(op.trim());
-    
+
         } else {
             String segment = VMcommand[1];
 
@@ -115,27 +104,26 @@ class Translator {
                 if (op.equals("push")) {
                     int ind = Integer.parseInt(i);
 
-                    switch(segment)
-                    {
-                        case "constant":
-                            return (push_const(ind));
-                        case "argument":
-                            return (push_arg(ind));
-                        case "local":
-                            return (push_loc(ind));
-                        case "this":
-                            return (push_this(ind));
-                        case "that":
-                            return (push_that(ind));
-                        case "static":
-                            return (push_static(ind));
-                        case "pointer":
-                            return (push_ptr(ind));
-                        case "temp":
-                            return (push_temp(ind));
-                        default:
-                            return "No segment "+ segment;
-                    }                    
+                    switch (segment) {
+                    case "constant":
+                        return (push_const(ind));
+                    case "argument":
+                        return (push_arg(ind));
+                    case "local":
+                        return (push_loc(ind));
+                    case "this":
+                        return (push_this(ind));
+                    case "that":
+                        return (push_that(ind));
+                    case "static":
+                        return (push_static(ind));
+                    case "pointer":
+                        return (push_ptr(ind));
+                    case "temp":
+                        return (push_temp(ind));
+                    default:
+                        return "No segment " + segment;
+                    }
                 } else if (VMcommand[0].equals("pop")) {
                     int ind = Integer.parseInt(i);
 
@@ -168,7 +156,7 @@ class Translator {
 
                 else if (VMcommand[0].equals("function"))
                     return ALOps.function(segment, Integer.parseInt(VMcommand[2]));
-                    
+
                 else if (VMcommand[0].equals("call"))
                     return ALOps.call(segment, VMcommand[2]);
 

@@ -49,7 +49,7 @@ class Parser {
 
             while (fr.hasNextLine()) {
                 String line = fr.nextLine();
-                String code = cleanCode(line);
+                String code = Utils.code_cleaner(line);
 
                 if (!code.isEmpty()) {
                     clean_fileString += code + "\n";
@@ -71,21 +71,6 @@ class Parser {
             e.printStackTrace();
         }
 
-    }
-
-    String cleanCode(String code) {
-        String clean_code = "";
-        for (int i = 0; i < code.length(); i++) {
-            // comments begin with / - avoids in-line comments to be part of clean code
-
-            if (code.charAt(i) == '/')
-                break;
-            if (code.charAt(i) != ' ')
-                clean_code += code.charAt(i);
-        }
-
-        clean_code = clean_code.trim();
-        return clean_code;
     }
 
     void handle_label(String name, int line_num)// invoked while first pass only
