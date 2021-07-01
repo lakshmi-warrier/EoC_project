@@ -1,1 +1,8 @@
-Space to write XML code
+<keyword> method </keyword>
+<identifier> Fraction </identifier>
+<identifier> foo </identifier>
+<symbol> ( </symbol>
+<keyword> int </keyword>
+<identifier> y </identifier>
+<symbol> ) </symbol>
+<symbol> { </symbol>

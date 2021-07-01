@@ -20,21 +20,34 @@ class JackAnalyzer {
                 } catch (StringIndexOutOfBoundsException e) {
                     // if the folder contains no files, index out of bound exception is thrown as
                     // '.' is missing
-                    System.out.println("Can't find any files in the path. Please check the path\nClosing program");
+                    System.out.println("Can't find any JACK files in the path. Please check the path\nClosing program");
                     System.exit(0);
                 }
 
+                String finalCode = "";
                 for (File jFile : JackFiles) {
                     String outFileName = jFile.getName();
                     String outFilePath = inFolderPath + "\\" + outFileName.substring(0, outFileName.length() - 5)
                             + ".xml";
 
+                    try {
+                        Scanner read_File = new Scanner(jFile);
+                        finalCode = Tokenizer.JackTokenizer(read_File.nextLine());
+                        System.out.println(finalCode);
+                    } catch (FileNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
+                
                     System.out.println(outFilePath);
                     File output = new File(outFilePath);
                     FileWriter myWriter;
                     try {
                         myWriter = new FileWriter(output);
-                        myWriter.write("Space to write XML code");
+
+                        //String finalCode = Tokenizer.JackTokenizer("method Fraction foo ( int y ) { } ");
+                        myWriter.write(finalCode);
                         myWriter.close();
                     } catch (IOException e) {
                         // TODO Auto-generated catch block

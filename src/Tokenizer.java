@@ -36,30 +36,34 @@ public class Tokenizer {
         return keywords;
     }
 
-    static void JackTokenizer(String token) {
+    static String JackTokenizer(String token) {
+        String finalCode = "";
         token = Utils.code_cleaner(token); // for comment and whitespace handling
         // CodeLine =Utils.tokenise(token); // split into array lists
 
         CodeLine = token.split(" ");
         for (String line : CodeLine) {
-            //System.out.println("Line 41: " + line);
+            // System.out.println("Line 41: " + line);
             if (isNumeric(line)) {
                 token = IntegerConstant(line);
-                System.out.println(token);
+
             } else if (isSymbol(line)) {
                 token = Symbols(line);
-                System.out.println(token);
+
             } else if (isStringConstant(line)) {
                 token = stringConstant(line.substring(1, line.length() - 1));
-                System.out.println(token);
+
             } else if (isKeyword(line)) {
                 token = statements(line);
-                System.out.println(token);
+
             } else {
                 token = Identifiers(line);
-                System.out.println(token);
+
             }
+            finalCode += token + "\n";
         }
+        System.out.println("----FINAL----\n" + finalCode);
+        return finalCode;
     }
 
     static String statements(String token) // for class, method, int
