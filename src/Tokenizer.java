@@ -3,6 +3,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Tokenizer {
+    // static ArrayList<String> CodeLine;
+
     static String[] CodeLine;
     static List<String> keywords;
     static List<String> numbers;
@@ -35,10 +37,12 @@ public class Tokenizer {
     }
 
     static void JackTokenizer(String token) {
-        Utils.code_cleaner(token); // for comment and whitespace handling
-        CodeLine = token.split(" "); // split into array lists
-        for (int i = 0; i < CodeLine.length; i++) {
-            String line = CodeLine[i];
+        token = Utils.code_cleaner(token); // for comment and whitespace handling
+        // CodeLine =Utils.tokenise(token); // split into array lists
+
+        CodeLine = token.split(" ");
+        for (String line : CodeLine) {
+            //System.out.println("Line 41: " + line);
             if (isNumeric(line)) {
                 token = IntegerConstant(line);
                 System.out.println(token);
@@ -88,6 +92,7 @@ public class Tokenizer {
     }
 
     static boolean isSymbol(String token) {
+
         Pattern P = Pattern.compile("[&*();,+=|.<>{}\\[\\]~-]");
         Matcher m = P.matcher(token);
         boolean found = m.find();
@@ -115,7 +120,7 @@ public class Tokenizer {
         }
     }
 
-    static boolean isNumeric(String line) {        
+    static boolean isNumeric(String line) {
         try {
             Integer.parseInt(line);
             return true;
