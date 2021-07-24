@@ -1,0 +1,26 @@
+class Main{
+    function void main () {
+    
+    var char char1;
+    var char char2;
+    var String str_OG;
+    var String str_OG2;
+    var String substring;
+    var String conString;
+
+    let str_OG = "Compiler";
+    let str_OG2 = "Assembler";
+    let char1 = StringUtils.endsWith(str_OG);
+    let char2 = StringUtils.startsWith(str_OG);
+    //let substring = StringUtils.substring(str_OG, 1, 4);
+    let conString = String.new(100);
+    let conString = StringUtils.concatenate(str_OG, str_OG2);
+
+    do Output.printChar(char1);
+    do Output.printChar(char2);
+    //do Output.printString(substring);
+    do Output.println();
+    do Output.printString(conString);
+    return;
+    }
+}
