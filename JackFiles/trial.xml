@@ -1,0 +1,10 @@
+<keyword> method </keyword>
+<identifier> Fraction </identifier>
+<identifier> foo </identifier>
+<symbol> ( </symbol>
+<keyword> int </keyword>
+<identifier> y </identifier>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<identifier>  </identifier>
+<symbol> } </symbol>

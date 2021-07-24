@@ -1,0 +1,16 @@
+<identifier> Class </identifier>
+<identifier> Bar </identifier>
+<symbol> { </symbol>
+<keyword> method </keyword>
+<identifier> Fraction </identifier>
+<identifier> foo </identifier>
+<symbol> ( </symbol>
+<keyword> int </keyword>
+<identifier> y </identifier>
+<symbol> ) </symbol>
+<symbol> { </symbol>
+<keyword> var </keyword>
+<keyword> int </keyword>
+<symbol> temp; </symbol>
+<symbol> } </symbol>
+<symbol> } </symbol>

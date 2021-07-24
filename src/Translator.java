@@ -56,7 +56,7 @@ class Translator {
 
                     while (sc.hasNextLine()) {
                         String line = sc.nextLine();
-                        line = string_cleaner(line);
+                        line = Utils.code_cleaner(line);
                         String code = code_generator(line).trim();
                         if (code != null)
                             asm += code + "\n";
@@ -89,25 +89,13 @@ class Translator {
         }
     }
 
-    static String string_cleaner(String s) {
-        String newString = "";
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '/')
-                break;
-            else
-                newString += s.charAt(i);
-        }
-
-        return newString.strip();
-    }
-
     static String code_generator(String VM) {
         String[] VMcommand = VM.split(" "); // To Handle push and pop segment i
 
         String op = VMcommand[0];
         if (VMcommand.length == 1) {
             return ALOps.ops(op.trim());
-    
+
         } else {
             String segment = VMcommand[1];
 
