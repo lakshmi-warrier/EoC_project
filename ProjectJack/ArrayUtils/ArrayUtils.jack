@@ -1,0 +1,15 @@
+class ArrayUtils{
+    constructor ArrayUtils new(){
+	    return this;
+	}
+    function boolean search(Array arr, int a, int length){
+	    var int pos;
+		let pos = 0;
+		while(pos<length){
+		    if(arr[pos]==a){
+			    return true;
+			}
+			let pos = pos + 1;
+		}
+		return false;
+	}
