@@ -1,0 +1,83 @@
+class StringUtils  {
+
+
+     constructor StringUtils new(){
+	 return this;
+	} 
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /*function boolean Contains( String str, char c) {
+
+        var int len,pos;
+        let len = str.length();
+        let pos = 0;
+        while(pos<len) {
+            if( str.charAt(pos)==c) {
+                return true; }
+            let pos = pos + 1;
+          }
+         return false;
+        }
+	*/		
+	
+     /*      
+	 function String substring(String str, int startInd, int endInd)
+        {
+            var int pos;
+
+           var char currentChar;		   
+		   var char finalStr;
+		   let finalStr = "";
+           let pos = 0;	  
+		   while(pos<str.length())
+            {
+		        if(pos>=startInd)
+                {
+                    if (pos<=endInd)
+                    {
+				    let currentChar = str.charAt(pos);
+                    do finalStr.appendChar(currentChar);
+                    }
+			    }
+               		 let pos = pos+1;
+		    }
+		   return finalStr;
+  }*/
+
+    function char endsWith(String str){
+	        var int leng;
+	        var char lastChar;
+            let leng = str.length();
+            let lastChar = str.charAt(leng-1);
+            return lastChar;
+	}
+
+    function String concatenate(String str1, String str2){
+        var String newStr  ;
+        var int i;
+        let i=0;
+        let newStr = String.new(str1.length()+str2.length());
+        while(i<str1.length()){
+           do newStr.appendChar(str1.charAt(i));
+	    let i= i+1;
+        }
+        let i = 0;
+          while(i<str2.length()){
+           do newStr.appendChar(str2.charAt(i));
+	    let i= i+1;
+        }
+    return newStr;
+    }
+
+
+    function char startsWith(String str){
+	        var char firstChar;
+			let firstChar = str.charAt(0);
+			return firstChar;
+		}
+
+   }
