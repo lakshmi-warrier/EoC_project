@@ -18,7 +18,10 @@ class Main{
 	
 	// do ArrayUtils.sort(arr,length);                   //working
 	//do ArrayUtils.reverse(arr,length);                 //working
-	do ArrayUtils.arrayToString(arr,length);
+	//do ArrayUtils.arrayToString(arr,length);
+	
+	do Output.printString("Array:");
+	do ArrayUtils.print(arr,length);					//working
     return;
     
      }
