@@ -1,6 +1,25 @@
 class Main{
-    function void main () {
-        var Array arr;
-        
-    }
+    function void main () 
+	{
+    
+    var Array arr;
+	var int length,i,searchElement;
+	let length = Keyboard.readInt("Enter size :");
+    let arr= Array.new(length);
+	
+	let i=0;
+	while(i<length)
+	{
+	  let arr[i]=Keyboard.readInt("Enter number : ");
+	  let i = i+1;
+	}
+	//let searchElement=Keyboard.readInt("Enter the element to be searched : ");
+	//do ArrayUtils.search(arr,searchElement,length);    //working
+	
+	// do ArrayUtils.sort(arr,length);                   //working
+	//do ArrayUtils.reverse(arr,length);                 //working
+	do ArrayUtils.arrayToString(arr,length);
+    return;
+    
+     }
 }

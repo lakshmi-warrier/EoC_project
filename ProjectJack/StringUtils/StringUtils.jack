@@ -1,54 +1,48 @@
 class StringUtils  {
 
-
-     constructor StringUtils new(){
-	 return this;
-	} 
-
-    method void dispose() {
+    method void dispose() 
+	{
         do Memory.deAlloc(this);
         return;
     }
 
-    /*function boolean Contains( String str, char c) {
+     function void Contains( String str, char c) 
+	 {
 
         var int len,pos;
         let len = str.length();
         let pos = 0;
-        while(pos<len) {
-            if( str.charAt(pos)==c) {
-                return true; }
+        while(pos<len) 
+		  {
+            if( str.charAt(pos)=c) 
+			{ 
+				do Output.printString("Character found");
+				return;
+			}
             let pos = pos + 1;
           }
-         return false;
-        }
-	*/		
+		 do Output.printString("Character not found"); 
+         return;
+     }		
 	
-     /*      
-	 function String substring(String str, int startInd, int endInd)
-        {
-            var int pos;
-
+         
+	 function String substring( String str,int startInd,int endInd )
+    {
+           
            var char currentChar;		   
-		   var char finalStr;
-		   let finalStr = "";
-           let pos = 0;	  
-		   while(pos<str.length())
+		   var String finalStr;
+		   let finalStr=String.new(50);
+		   while(startInd<endInd)
             {
-		        if(pos>=startInd)
-                {
-                    if (pos<=endInd)
-                    {
-				    let currentChar = str.charAt(pos);
+				    let currentChar = str.charAt(startInd);
                     do finalStr.appendChar(currentChar);
-                    }
-			    }
-               		 let pos = pos+1;
+                    let startInd=startInd+1;
 		    }
-		   return finalStr;
-  }*/
-
-    function char endsWith(String str){
+		   
+			return finalStr;
+    }
+    function char endsWith(String str)
+	{
 	        var int leng;
 	        var char lastChar;
             let leng = str.length();
@@ -56,7 +50,8 @@ class StringUtils  {
             return lastChar;
 	}
 
-    function String concatenate(String str1, String str2){
+    function String concatenate(String str1, String str2)
+	{
         var String newStr  ;
         var int i;
         let i=0;
@@ -74,10 +69,34 @@ class StringUtils  {
     }
 
 
-    function char startsWith(String str){
+    function char startsWith(String str)
+	{
 	        var char firstChar;
 			let firstChar = str.charAt(0);
 			return firstChar;
-		}
+    }
+    function void equals(String str1, String str2)
+	{
+	        var int pos;
+		    let pos = 0;
+			if (~(str1.length()= str2.length()))
+			{
+			    do Output.printString("Strings are not equal");
+			    return;
+			}
+			
+			while(pos<str1.length())
+			{
+			    if(~(str1.charAt(pos)= str2.charAt(pos)))
+				{
+				    do Output.printString("Strings are not equal");
+				    return;
+				}
+				let pos = pos+1;
+			}
+			do Output.printString("Strings are equal");
+		    return;
+	}
+
 
    }
