@@ -9,7 +9,7 @@ public class Driver {
         sc.close();
 
         JackAnalyzer.jackAnalyser(inFolderPath);
-        String translatedPath = Translator.translatorMain(inFolderPath);
-        Assembler.AssemblerMain(translatedPath);
+       // String translatedPath = Translator.translatorMain(inFolderPath);
+        //Assembler.AssemblerMain(translatedPath);
     }
 }

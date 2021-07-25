@@ -50,8 +50,8 @@ class JackAnalyzer {
                             System.out.println(finalCode);
                         }
                         myWriter.close();
-                    } catch (IOException e1) {
-                        // TODO Auto-generated catch block
+                    } catch (IOException e1) 
+                    {
                         e1.printStackTrace();
                     }
 
