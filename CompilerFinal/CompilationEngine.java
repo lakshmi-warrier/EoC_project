@@ -10,13 +10,10 @@ public class CompilationEngine
     static int LabelCount;
     public CompilationEngine(File inFile, File outFile) 
     {
-
         tokenizer = new JackTokenizer(inFile);
         vmWriter = new VMWriter(outFile);
         symbolTable = new SymbolTable();
-
         LabelCount = 0;
-
     }
     static String Function()
     {
@@ -24,32 +21,26 @@ public class CompilationEngine
         {
             return Class + "." + Subroutine;
         }
-
         return "";
     }
     static String CompilerParse()
     {
         JackTokenizer.Advance();
-
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && (JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.INT || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.CHAR || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.BOOLEAN))
         {
             return JackTokenizer.CurrentToken();
         }
-
         if (JackTokenizer.token() == JackTokenizer.TYPE.IDENTIFIER)
         {
             return JackTokenizer.Identifier();
         }
-
         error("in|char|boolean|className");
-
         return "";
     }
     public void ClassCompiler()
     {
         //'class'
         JackTokenizer.Advance();
-
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD || JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.CLASS)
         {
             System.out.println(JackTokenizer.CurrentToken());
@@ -58,7 +49,6 @@ public class CompilationEngine
 
         //className
         JackTokenizer.Advance();
-
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("className");
@@ -84,7 +74,6 @@ public class CompilationEngine
 
         //save file
         VMWriter.close();
-
     }
     static void CompilerClassVarDec()
     {
@@ -134,14 +123,12 @@ public class CompilationEngine
                 kind = Symbol.KIND.FIELD;
                 break;
             }
-
         }
 
         //type
         type = CompilerParse();
 
         //at least one varName
-
         while(true)
         {
             //varName
@@ -162,13 +149,11 @@ public class CompilationEngine
             {
                 error("',' or ';'");
             }
-
             if (JackTokenizer.Symbol() == ';')
             {
                 break;
             }
         }
-
         CompilerClassVarDec();
     }
     static void CompileSubroutine()
@@ -191,7 +176,6 @@ public class CompilationEngine
         }
 
         JackTokenizer.KEYWORD keyword = JackTokenizer.KeyWords();
-
         SymbolTable.startSubroutine();
 
         //for method this is the first argument
@@ -201,7 +185,6 @@ public class CompilationEngine
         }
 
         String type = "";
-
         //'void' or type
         JackTokenizer.Advance();
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.VOID)
@@ -220,7 +203,6 @@ public class CompilationEngine
         {
             error("subroutineName");
         }
-
         Subroutine = JackTokenizer.Identifier();
 
         //'('
@@ -234,7 +216,6 @@ public class CompilationEngine
 
         //subroutineBody
         compileSubroutineMain(keyword);
-
         CompileSubroutine();
 
     }
@@ -242,18 +223,21 @@ public class CompilationEngine
     {
         //'{'
         Symbol('{');
+
         //varDec*
         VarDec();
+
         //write VM function declaration
         writeFunctionDec(keyword);
+
         //statements
         StatementCompile();
+
         //'}'
         Symbol('}');
     }
     static void writeFunctionDec(JackTokenizer.KEYWORD keyword)
     {
-
         VMWriter.writeFunction(Function(),SymbolTable.varCount(Symbol.KIND.VAR));
 
         //METHOD and CONSTRUCTOR need to load this pointer
@@ -275,7 +259,6 @@ public class CompilationEngine
     }
     static void StatementCompile()
     {
-
         //determine whether there is a statement next can be a '}'
         JackTokenizer.Advance();
 
@@ -372,10 +355,9 @@ public class CompilationEngine
     }
     static void VarDec()
     {
-
         //determine if there is a varDec
-
         JackTokenizer.Advance();
+
         //no 'var' go back
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD || JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.VAR)
         {
@@ -387,7 +369,6 @@ public class CompilationEngine
         String type = CompilerParse();
         while(true)
         {
-
             //varName
             JackTokenizer.Advance();
 
@@ -395,17 +376,14 @@ public class CompilationEngine
             {
                 error("identifier");
             }
-
             SymbolTable.define(JackTokenizer.Identifier(),type, Symbol.KIND.VAR);
 
             //',' or ';'
             JackTokenizer.Advance();
-
             if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != ',' && JackTokenizer.Symbol() != ';'))
             {
                 error("',' or ';'");
             }
-
             if (JackTokenizer.Symbol() == ';')
             {
                 break;
@@ -415,24 +393,24 @@ public class CompilationEngine
     }
     static void Do()
     {
-
         //subroutineCall
         SubroutineCall();
+
         //';'
         Symbol(';');
+
         //pop return value
         VMWriter.writePop(VMWriter.SEGMENT.TEMP,0);
     }
     static void Let()
     {
-
         //varName
         JackTokenizer.Advance();
+
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("varName");
         }
-
         String varName = JackTokenizer.Identifier();
 
         //'[' or '='
@@ -441,13 +419,11 @@ public class CompilationEngine
         {
             error("'['|'='");
         }
-
         boolean expExist = false;
 
         //'[' expression ']' ,need to deal with array [base+offset]
         if (JackTokenizer.Symbol() == '[')
         {
-
             expExist = true;
 
             //push array variable,base address into stack
@@ -476,8 +452,10 @@ public class CompilationEngine
             //*(base+offset) = expression
             //pop expression value to temp
             VMWriter.writePop(VMWriter.SEGMENT.TEMP,0);
+
             //pop base+index into 'that'
             VMWriter.writePop(VMWriter.SEGMENT.POINTER,1);
+
             //pop expression value into *(base+index)
             VMWriter.writePush(VMWriter.SEGMENT.TEMP,0);
             VMWriter.writePop(VMWriter.SEGMENT.THAT,0);
@@ -486,7 +464,6 @@ public class CompilationEngine
         {
             //pop expression value directly
             VMWriter.writePop(segment(SymbolTable.kindOf(varName)), SymbolTable.indexOf(varName));
-
         }
     }
     static VMWriter.SEGMENT segment(Symbol.KIND kind)
@@ -526,21 +503,29 @@ public class CompilationEngine
 
         //'('
         Symbol('(');
+
         //expression while condition: true or false
         Expression();
+
         //')'
         Symbol(')');
+
         //if ~(condition) go to continue label
         VMWriter.writeArithmetic(VMWriter.COMMAND.NOT);
         VMWriter.writeIf(continueLabel);
+
         //'{'
         Symbol('{');
+
         //statements
         StatementCompile();
+
         //'}'
         Symbol('}');
+
         //if (condition) go to top label
         VMWriter.writeGoto(topLabel);
+
         //or continue
         VMWriter.writeLabel(continueLabel);
     }
@@ -551,10 +536,8 @@ public class CompilationEngine
     }
     static void Return()
     {
-
         //check if there is any expression
         JackTokenizer.Advance();
-
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == ';')
         {
             //no expression push 0 to stack
@@ -569,35 +552,40 @@ public class CompilationEngine
             //';'
             Symbol(';');
         }
-
         VMWriter.writeReturn();
-
     }
     static void If()
     {
-
         String elseLabel = Label();
         String endLabel = Label();
 
         //'('
         Symbol('(');
+
         //expression
         Expression();
+
         //')'
         Symbol(')');
+
         //if ~(condition) go to else label
         VMWriter.writeArithmetic(VMWriter.COMMAND.NOT);
         VMWriter.writeIf(elseLabel);
+
         //'{'
         Symbol('{');
+
         //statements
         StatementCompile();
+
         //'}'
         Symbol('}');
+
         //if condition after statement finishing, go to end label
         VMWriter.writeGoto(endLabel);
 
         VMWriter.writeLabel(elseLabel);
+
         //check if there is 'else'
         JackTokenizer.Advance();
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.ELSE)
@@ -613,16 +601,15 @@ public class CompilationEngine
         {
             JackTokenizer.Pointer();
         }
-
         VMWriter.writeLabel(endLabel);
-
     }
     static void Term()
     {
-
         JackTokenizer.Advance();
+
         //check if it is an identifier
-        if (JackTokenizer.token() == JackTokenizer.TYPE.IDENTIFIER){
+        if (JackTokenizer.token() == JackTokenizer.TYPE.IDENTIFIER)
+        {
             //varName|varName '[' expression ']'|subroutineCall
             String tempId = JackTokenizer.Identifier();
 
@@ -630,12 +617,12 @@ public class CompilationEngine
             if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '[')
             {
                 //this is an array entry
-
                 //push array variable,base address into stack
                 VMWriter.writePush(segment(SymbolTable.kindOf(tempId)),SymbolTable.indexOf(tempId));
 
                 //expression
                 Expression();
+
                 //']'
                 Symbol(']');
 
@@ -644,9 +631,9 @@ public class CompilationEngine
 
                 //pop into 'that' pointer
                 VMWriter.writePop(VMWriter.SEGMENT.POINTER,1);
+
                 //push *(base+index) onto stack
                 VMWriter.writePush(VMWriter.SEGMENT.THAT,0);
-
             }
             else if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && (JackTokenizer.Symbol() == '(' || JackTokenizer.Symbol() == '.'))
             {
@@ -658,10 +645,10 @@ public class CompilationEngine
             {
                 //this is varName
                 JackTokenizer.Pointer();
+
                 //push variable directly onto stack
                 VMWriter.writePush(segment(SymbolTable.kindOf(tempId)), SymbolTable.indexOf(tempId));
             }
-
         }
         else
         {
@@ -684,20 +671,17 @@ public class CompilationEngine
                     VMWriter.writePush(VMWriter.SEGMENT.CONST,(int)str.charAt(i));
                     VMWriter.writeCall("String.appendChar",2);
                 }
-
             }
             else if(JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.TRUE)
             {
                 //~0 is true
                 VMWriter.writePush(VMWriter.SEGMENT.CONST,0);
                 VMWriter.writeArithmetic(VMWriter.COMMAND.NOT);
-
             }
             else if(JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.THIS)
             {
                 //push this pointer onto stack
                 VMWriter.writePush(VMWriter.SEGMENT.POINTER,0);
-
             }
             else if(JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && (JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.FALSE || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.NULL))
             {
@@ -708,6 +692,7 @@ public class CompilationEngine
             {
                 //expression
                 Expression();
+
                 //')'
                 Symbol(')');
             }
@@ -717,7 +702,6 @@ public class CompilationEngine
 
                 //term
                 Term();
-
                 if (s == '-')
                 {
                     VMWriter.writeArithmetic(VMWriter.COMMAND.NEG);
@@ -733,17 +717,14 @@ public class CompilationEngine
                 error("integerConstant|stringConstant|keywordConstant|'(' expression ')'|unaryOp term");
             }
         }
-
     }
     static void SubroutineCall()
     {
-
         JackTokenizer.Advance();
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("identifier");
         }
-
         String name = JackTokenizer.Identifier();
         int nArgs = 0;
 
@@ -752,28 +733,28 @@ public class CompilationEngine
         {
             //push this pointer
             VMWriter.writePush(VMWriter.SEGMENT.POINTER,0);
+
             //'(' expressionList ')'
             //expressionList
             nArgs = ExpressionList() + 1;
+
             //')'
             Symbol(')');
             //call subroutine
             VMWriter.writeCall(Class + '.' + name, nArgs);
-
         }
         else if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '.')
         {
             //(className|varName) '.' subroutineName '(' expressionList ')'
-
             String objName = name;
+
             //subroutineName
             JackTokenizer.Advance();
-           // System.out.println("subroutineName:" + JackTokenizer.Identifier());
+            
             if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
             {
                 error("identifier");
             }
-
             name = JackTokenizer.Identifier();
 
             //check for if it is built-in type
@@ -797,10 +778,13 @@ public class CompilationEngine
 
             //'('
             Symbol('(');
+
             //expressionList
             nArgs += ExpressionList();
+
             //')'
             Symbol(')');
+
             //call subroutine
             VMWriter.writeCall(name,nArgs);
         }
@@ -808,12 +792,12 @@ public class CompilationEngine
         {
             error("'('|'.'");
         }
-
     }
     static void Expression()
     {
         //term
         Term();
+        
         //(op term)*
         while (true)
         {
@@ -821,9 +805,7 @@ public class CompilationEngine
             //op
             if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.IsOperation())
             {
-
                 String opCmd = "";
-
                 switch (JackTokenizer.Symbol())
                 {
                     case '+':
@@ -879,7 +861,6 @@ public class CompilationEngine
                 }
                 //term
                 Term();
-
                 VMWriter.writeCommand(opCmd,"","");
             }
             else 
@@ -892,8 +873,8 @@ public class CompilationEngine
     static int ExpressionList()
     {
         int nArgs = 0;
-
         JackTokenizer.Advance();
+
         //determine if there is any expression, if next is ')' then no
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == ')')
         {
@@ -903,8 +884,10 @@ public class CompilationEngine
         {
             nArgs = 1;
             JackTokenizer.Pointer();
+
             //expression
             Expression();
+            
             //(','expression)*
             while (true) 
             {

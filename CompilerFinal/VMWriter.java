@@ -12,7 +12,6 @@ public class VMWriter
 
     static 
     {
-
         segmentStringHashMap.put(SEGMENT.CONST,"constant");
         segmentStringHashMap.put(SEGMENT.ARG,"argument");
         segmentStringHashMap.put(SEGMENT.LOCAL,"local");
