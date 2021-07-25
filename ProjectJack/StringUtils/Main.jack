@@ -25,10 +25,9 @@ class Main{
    	do Output.println();
 
 
-    let conString = String.new(100);
-
     let str2 =Keyboard.readLine("Enter the second String: ");
 
+    let conString = String.new(str2.length()+str1.length());
     let conString = StringUtils.concatenate (str1, str2);
 
     
@@ -36,17 +35,22 @@ class Main{
     do Output.printString(conString);
 	do Output.println();
 	 
-	let sub= String.new(100);
 
     let str1 = Keyboard.readLine("Enter the string of which the substring needs to be found: ");
     let startInd = Keyboard.readInt("Starting index of the substring: ")-1;
     let endInd = Keyboard.readInt("End index of the substring: ")-1;
+
+	let sub= String.new(endInd-startInd);
     let sub= StringUtils.substring (str1, startInd, endInd);
     do Output.printString("Substring: ");
 	do Output.printString(sub);
 	do Output.println();
 	
-	do StringUtils.Contains (str1,112);
+    do Output.printString("Enter the character to be found: ");
+    let char1 = Keyboard.readChar();
+   	do Output.println();
+
+	do StringUtils.Contains (str1,char1);
 	do Output.println();
 	
     let str1 = Keyboard.readLine("Enter the first string to compare: ");
