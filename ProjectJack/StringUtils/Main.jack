@@ -29,11 +29,12 @@ class Main{
 
     let conString = String.new(str2.length()+str1.length());
     let conString = StringUtils.concatenate (str1, str2);
-
     
-	
+    do Output.printString("After concatenation: ");
     do Output.printString(conString);
-	do Output.println();
+	do Output.println();    	
+    do Output.println();
+
 	 
 
     let str1 = Keyboard.readLine("Enter the string of which the substring needs to be found: ");
@@ -45,6 +46,7 @@ class Main{
     do Output.printString("Substring: ");
 	do Output.printString(sub);
 	do Output.println();
+    do Output.println();
 	
     do Output.printString("Enter the character to be found: ");
     let char1 = Keyboard.readChar();
@@ -52,6 +54,7 @@ class Main{
 
 	do StringUtils.Contains (str1,char1);
 	do Output.println();
+    do Output.println();
 	
     let str1 = Keyboard.readLine("Enter the first string to compare: ");
     let str2 = Keyboard.readLine("Enter the second string to compare: ");
@@ -60,5 +63,5 @@ class Main{
 	
     return;
     
-     }
+    }
 }
