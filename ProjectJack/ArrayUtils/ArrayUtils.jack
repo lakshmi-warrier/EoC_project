@@ -14,11 +14,13 @@ class ArrayUtils
 		    if(arr[pos]=a)
 			{
 			   do Output.printString("Element found");
+			   do Output.println();
 			   return;
 			}
 			let pos = pos + 1;
 		}
 		do Output.printString("Element not found");
+		do Output.println();
 		return;
 	}
 	
@@ -43,8 +45,10 @@ class ArrayUtils
 			}
 			let i = i + 1;
 		}
+		do Output.println();
 		do Output.printString("Sorted Array is -  ");
 		do ArrayUtils.print(arr,len);
+		do Output.println();
 		return;
 	}
 	
@@ -63,8 +67,10 @@ class ArrayUtils
 	   let j=j-1;
 	   
 	}
+	do Output.println();
 	do Output.printString("Reversed Array is -  ");
 	do ArrayUtils.print(newArray,len);
+	do Output.println();
 	return;
   }
 

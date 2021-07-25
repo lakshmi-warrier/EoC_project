@@ -14,11 +14,18 @@ class Main{
 	  let i = i+1;
 	}
 	
+	do Output.println();
+	do Output.printString("Array:");
+	do ArrayUtils.print(arr,length);					//working
+	do Output.println();
+	
+	do Output.println();
 	let searchElement=Keyboard.readInt("Enter the element to be searched : ");
 	
 	do Output.println();
 	do Output.printString(" SEARCH ARRAY: ");
 	do ArrayUtils.search(arr,searchElement,length);    //working
+	
 	
 	do Output.println();
 	do Output.printString(" SORT ARRAY: ");
@@ -29,12 +36,9 @@ class Main{
 	do ArrayUtils.reverse(arr,length);                 //working
 	
 	do Output.println();
-	do Output.printString("Array to string");
+	do Output.printString("Array to string : ");
 	do ArrayUtils.arrayToString(arr,length);
 	
-	do Output.println();
-	do Output.printString("Array:");
-	do ArrayUtils.print(arr,length);					//working
     return;
     
      }

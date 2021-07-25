@@ -54,6 +54,8 @@ push constant 100
 call String.appendChar 2
 call Output.printString 1
 pop temp 0
+call Output.println 0
+pop temp 0
 push constant 0
 return  
 goto LABEL_3 
@@ -102,6 +104,8 @@ call String.appendChar 2
 push constant 100
 call String.appendChar 2
 call Output.printString 1
+pop temp 0
+call Output.println 0
 pop temp 0
 push constant 0
 return  
@@ -184,6 +188,8 @@ add
 pop local 0
 goto LABEL_5 
 label LABEL_4 
+call Output.println 0
+pop temp 0
 push constant 19
 call String.new 1
 push constant 83
@@ -230,6 +236,8 @@ push argument 0
 push argument 1
 call ArrayUtils.print 2
 pop temp 0
+call Output.println 0
+pop temp 0
 push constant 0
 return  
 function ArrayUtils.reverse 3
@@ -270,6 +278,8 @@ sub
 pop local 1
 goto LABEL_11 
 label LABEL_10 
+call Output.println 0
+pop temp 0
 push constant 21
 call String.new 1
 push constant 82
@@ -319,6 +329,8 @@ pop temp 0
 push local 2
 push argument 1
 call ArrayUtils.print 2
+pop temp 0
+call Output.println 0
 pop temp 0
 push constant 0
 return  
