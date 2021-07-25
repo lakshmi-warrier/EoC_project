@@ -1,5 +1,0 @@
-Class Bar {
- method Fraction foo ( int y ) {
- var int temp; // a variable
- }
-}
