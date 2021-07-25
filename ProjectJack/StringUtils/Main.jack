@@ -4,36 +4,55 @@ class Main{
     
     var char char1;
     var char char2;
-    var String str_OG;
-    var String str_OG2;
+    var String str1;
+    var String str2;
     var String sub;
     var String conString;
+    var int startInd;
+    var int endInd;
 
-    let str_OG = "Compiler";
-    let str_OG2 = "Assembler";
-    let char1 = StringUtils.endsWith(str_OG);
-    let char2 = StringUtils.startsWith(str_OG);
-    let conString = String.new(100);
-    let conString = StringUtils.concatenate(str_OG, str_OG2);
-
-    do Output.printChar(char1);
-    do Output.println();
-
+    let str1 = Keyboard.readLine("Enter the first String: ");
+    
+    let char1 = StringUtils.endsWith (str1);
+    let char2 = StringUtils.startsWith (str1);
+    do Output.printString(str1);
+    do Output.printString(" begins with ");   
     do Output.printChar(char2);
+    do Output.printString(" and ends with ");
+    do Output.printChar(char1);
+
     do Output.println();
+   	do Output.println();
+
+
+    let conString = String.new(100);
+
+    let str2 =Keyboard.readLine("Enter the second String: ");
+
+    let conString = StringUtils.concatenate (str1, str2);
+
+    
 	
     do Output.printString(conString);
 	do Output.println();
 	 
 	let sub= String.new(100);
-    let sub= StringUtils.substring(str_OG, 0, 4);
+
+    let str1 = Keyboard.readLine("Enter the string of which the substring needs to be found: ");
+    let startInd = Keyboard.readInt("Starting index of the substring: ")-1;
+    let endInd = Keyboard.readInt("End index of the substring: ")-1;
+    let sub= StringUtils.substring (str1, startInd, endInd);
+    do Output.printString("Substring: ");
 	do Output.printString(sub);
 	do Output.println();
 	
-	do StringUtils.Contains(str_OG,112);
+	do StringUtils.Contains (str1,112);
 	do Output.println();
 	
-	do StringUtils.equals(str_OG,"Compiler");
+    let str1 = Keyboard.readLine("Enter the first string to compare: ");
+    let str2 = Keyboard.readLine("Enter the second string to compare: ");
+
+	do StringUtils.equals (str1,str2);
 	
     return;
     
