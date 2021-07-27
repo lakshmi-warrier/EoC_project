@@ -1,0 +1,124 @@
+class Queue
+{
+	field Array arr;
+	field int front;
+	field int rear;
+	field int elem;
+	field int length;
+	constructor Queue new(int size)
+	{
+		let arr = Array.new(size);
+		let front=-1;
+		let rear=-1;
+		let length=size;
+		return this;
+	}
+    method void dispose() 
+	{
+        do Memory.deAlloc(this);
+        return;
+	}
+	method void enqueue(int item) 
+	{
+		if(rear=(length-1))
+		{
+			do Output.printString(" QUEUE IS FULL");
+			do Output.println();
+		}
+		if((rear=-1) & (front =-1))
+		{
+			let front = 0;
+			let rear=0;
+			let arr[rear]=item;
+		}
+		else
+		{
+			let rear = rear+1;
+			let arr[rear]=item;
+		}
+		return;
+	}
+	method void getfront()
+	{
+		if((rear=-1) & (front =-1))
+		{
+			do Output.printString(" NO ELEMENT PRESENT");
+			do Output.println();
+		}
+		else
+		{
+			do Output.printInt(arr[front]);
+			do Output.println();
+		}
+		return;
+	}
+	method void dequeue()
+	{
+		if((rear=-1) & (front =-1))
+		{
+			do Output.printString(" NO ELEMENT PRESENT");
+			do Output.println();
+		}
+		if(front=rear)
+		{
+			let elem=arr[front];
+			let front=-1;
+			let rear=-1;
+			do Output.printString("Deleted Element is - ");
+			do Output.printInt(arr[elem]);
+		}
+		else
+		{
+			do Output.printString("Deleted Element is - ");
+			do Output.printInt(arr[front]);
+			let front = front +1;	
+		}
+		return;
+	}
+	method void dequeuePrint()
+	{
+		if((rear=-1) & (front =-1))
+		{
+			do Output.printString(" NO ELEMENT PRESENT");
+			do Output.println();
+		}
+		if(front=rear)
+		{
+			//let elem=arr[front];
+			let front=-1;
+			let rear=-1;
+			//do Output.printString("Deleted Element is - ");
+			//do Output.printInt(arr[elem]);
+		}
+		else
+		{
+			//do Output.printString("Deleted Element is - ");
+			//do Output.printInt(arr[front]);
+			let front = front +1;	
+		}
+		return;
+	}
+	method void print()
+	{
+		var int i;
+		var Queue q;
+		let q=this;
+		if(rear = -1 & front = -1)
+		{
+			do Output.printString(" QUEUE IS EMPTY");
+			do Output.println();
+		}
+		else
+		{
+		    do Output.printString("Elements :  ");
+		    //let i=front;		
+			while(~((rear=-1) & (front =-1)))
+			{
+			    do Output.printInt(arr[front]);
+				do Output.printString("  ");
+				do q.dequeuePrint();
+			}
+		}
+		return;
+	}
+}

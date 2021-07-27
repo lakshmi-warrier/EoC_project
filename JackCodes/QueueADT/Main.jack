@@ -1,0 +1,42 @@
+class Main
+{
+    function void main () 
+	{
+		var Array arr;
+		var int length,i,item;
+		var Queue obj;
+		let length=Keyboard.readInt("Enter size :");
+		let obj= Queue.new(length);	
+		let i=0;
+		do Output.println();
+		do Output.printString("Insertion :  ");
+		do Output.println();
+		do Output.println();
+		while(i<length)
+		{
+		  let item = Keyboard.readInt("Enter number : ");
+		  do obj.enqueue(item);
+		  let i = i+1;
+		}
+		
+		do Output.println();
+		do Output.printString("Get Front element: ");
+		do obj.getfront();
+		
+		do Output.println();
+		do Output.printString("Deletion :  ");
+		do Output.println();
+		do Output.println();
+		do Output.printString("Deletion Succesfull");
+		do Output.println();
+		do obj.dequeue();
+		
+		do Output.println();
+		do Output.println();
+		do Output.printString("Displaying queue: ");
+		do Output.println();
+		do obj.print();
+		return;
+	}
+	
+}

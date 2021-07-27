@@ -1,0 +1,64 @@
+class Main
+{
+   function void main()
+   {
+      var int choice;
+      var int in,wish,size;
+      var boolean condition;
+	  var stack obj;
+      let condition=true;
+      let size=Keyboard.readInt("Enter the size of stack :  ");
+      let obj=stack.new(size);
+	  do Output.printString("  MENU");
+	  do Output.println();
+      do Output.printString("==========");
+	  do Output.println();
+      do Output.printString("1.Push ");
+      do Output.printString("2.Pop ");
+      do Output.printString("3.Display ");
+      do Output.printString("4.Peek Element ");
+      do Output.printString("5.Check if stack is empty ");
+	  
+      while(condition){
+      do Output.println();
+      let choice = Keyboard.readInt("Enter choice : ");
+      if(choice=1){
+         let in=Keyboard.readInt("Enter the number to insert :  ");
+         do obj.push(in);
+		 do Output.printString("Insertion Of Element Succesfull");
+		 do Output.println();
+      }
+      if(choice=2) {
+         do obj.pop();
+		 do Output.printString("After Deletion -");
+		 do Output.println();
+		 do obj.display();
+		 do Output.println();
+		 
+      }
+      if(choice=3) {
+         do obj.display();
+		 do Output.println();
+      }
+      if(choice=4) {
+	     do Output.printString("Peek Element is  ");
+         do obj.peek();
+		 do Output.println();
+      }
+      if(choice=5) {
+         do obj.isempty();
+		 do Output.println();
+      }
+      let wish=Keyboard.readInt("Do you wish to continue ? Press 1 to continue  ");
+      if(wish=1){
+      let condition=true;
+	  }
+      else{
+      let condition= false;
+      }
+	  
+      }
+	  
+	  return;
+   }
+}
