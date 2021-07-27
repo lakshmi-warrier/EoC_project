@@ -25,7 +25,8 @@ public class JackTokenizer
     static HashMap<String,KEYWORD> keyWordMap = new HashMap<String, KEYWORD>();
     static HashSet<Character> opSet = new HashSet<Character>();
 
-    static {
+    static 
+    {
 
         keyWordMap.put("class",KEYWORD.CLASS);
         keyWordMap.put("constructor",KEYWORD.CONSTRUCTOR);
@@ -76,7 +77,6 @@ public class JackTokenizer
                     preprocessed += line + "\n";
                 }
             }
-
             preprocessed = BlockComments(preprocessed).trim();
 
             Check();
@@ -246,30 +246,23 @@ public class JackTokenizer
     }
     static String BlockComments(String strIn)
     {
-
         int startIndex = strIn.indexOf("/*");
-
-        if (startIndex == -1) return strIn;
-
+        if (startIndex == -1) 
+        {
+            return strIn;
+        }
         String result = strIn;
-
         int endIndex = strIn.indexOf("*/");
-
         while(startIndex != -1)
         {
-
             if (endIndex == -1)
             {
-
                 return strIn.substring(0,startIndex - 1);
-
             }
             result = result.substring(0,startIndex) + result.substring(endIndex + 2);
-
             startIndex = result.indexOf("/*");
             endIndex = result.indexOf("*/");
         }
-
         return result;
     }
     static TYPE token() 

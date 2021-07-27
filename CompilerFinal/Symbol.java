@@ -6,7 +6,8 @@ public class Symbol
     KIND kind;
     int index;
 
-    public Symbol(String type, KIND kind, int index) {
+    public Symbol(String type, KIND kind, int index) 
+    {
         this.type = type;
         this.kind = kind;
         this.index = index;

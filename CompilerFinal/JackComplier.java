@@ -10,7 +10,6 @@ public class JackComplier
 
         for (File f:files)
         {
-
             if (f.getName().endsWith(".jack"))
             {
                 result.add(f);
@@ -35,14 +34,11 @@ public class JackComplier
         {
             //if it is a single file, see whether it is a vm file
             String path = fileIn.getAbsolutePath();
-
             if (!path.endsWith(".jack")) 
             {
                 System.out.println("JACK FILE NOT PRESENT");
             }
-
             jackFiles.add(fileIn);
-
         } 
         else if (fileIn.isDirectory()) 
         {
