@@ -6,7 +6,7 @@ public class CompilationEngine
     static SymbolTable symbolTable;
     static String Class;
     static String Subroutine;
-
+    static int nArgs = 0;
     static int LabelCount;
     public CompilationEngine(File inFile, File outFile) 
     {
@@ -59,18 +59,21 @@ public class CompilationEngine
         }
 
         //classname does not need to be put in symbol table
+        // checks if the current token type is identifier or not
+        // if it is a identifier it is being stored in the string class
         Class = JackTokenizer.Identifier();
 
-        //'{'
+        // checks if the next line starts with {
         Symbol('{');
 
         //classVarDec* subroutineDec*
         CompilerClassVarDec();
         CompileSubroutine();
 
-        //'}'
+        //checks if it has closed bracker }
         Symbol('}');
 
+        // checks if the code have more token or not
         if (JackTokenizer.HasMoreTokens())
         {
             throw new IllegalStateException("Unexpected tokens");
@@ -730,7 +733,7 @@ public class CompilationEngine
             error("identifier");
         }
         String name = JackTokenizer.Identifier();
-        int nArgs = 0;
+
 
         JackTokenizer.Advance();
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '(')
@@ -876,9 +879,9 @@ public class CompilationEngine
     }
     static int ExpressionList()
     {
-        int nArgs = 0;
         JackTokenizer.Advance();
-
+        System.out.println(JackTokenizer.currentTokenType);
+        System.out.println(JackTokenizer.token());
         //determine if there is any expression, if next is ')' then no
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == ')')
         {
@@ -918,8 +921,10 @@ public class CompilationEngine
     static void Symbol(char symbol)
     {
         JackTokenizer.Advance();
+        // cheks if the symbol is there in the in symbolReg
         if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || JackTokenizer.Symbol() != symbol)
         {
+            // if not in the symbolReg it shows an error
             error("'" + symbol + "'");
         }
     }
