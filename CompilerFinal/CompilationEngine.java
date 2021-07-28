@@ -645,7 +645,8 @@ public class CompilationEngine
             else if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && (JackTokenizer.Symbol() == '(' || JackTokenizer.Symbol() == '.'))
             {
                 //this is a subroutineCall
-                JackTokenizer.Pointer();JackTokenizer.Pointer();
+                JackTokenizer.Pointer();
+                JackTokenizer.Pointer();
                 SubroutineCall();
             }
             else 
@@ -800,7 +801,7 @@ public class CompilationEngine
             error("'('|'.'");
         }
     }
-    static void Expression()
+    static void Expression() // to write the vm command add, sub, gt, lt into the vm file
     {
         //term
         Term();
@@ -809,11 +810,12 @@ public class CompilationEngine
         while (true)
         {
             JackTokenizer.Advance();
+
             //op
             if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.IsOperation())
             {
                 String opCmd = "";
-                switch (JackTokenizer.Symbol())
+                switch (JackTokenizer.Symbol()) // checks the symbols
                 {
                     case '+':
                     {
@@ -866,8 +868,11 @@ public class CompilationEngine
                         break;
                     }
                 }
+                
                 //term
                 Term();
+
+                //
                 VMWriter.writeCommand(opCmd,"","");
             }
             else 
