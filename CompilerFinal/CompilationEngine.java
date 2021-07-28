@@ -207,7 +207,9 @@ public class CompilationEngine
             return;
         }
 
-        //start of a subroutine
+        //checks if the token start with keyword
+        //also, if that starts with function|constructor|method
+        // if not, prints the error
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD || (JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.CONSTRUCTOR && JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.FUNCTION && JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.METHOD))
         {
             error("constructor|function|method");
