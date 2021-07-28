@@ -158,6 +158,9 @@ public class JackTokenizer
     }
     static KEYWORD KeyWords()
     {
+        //checks if the current token is keyword or not
+        // if it is a keyword, the corresponding keyword will be returned
+        // else a error will be printed
         if (currentTokenType == TYPE.KEYWORD)
         {
             return keyWordMap.get(currentToken);
@@ -169,6 +172,9 @@ public class JackTokenizer
     }
     static char Symbol()
     {
+        //checks the current token is a symbol or not
+        //if it is a symbol, the symbol will be returned
+        //else error will be printed
         if (currentTokenType == TYPE.SYMBOL)
         {
             return currentToken.charAt(0);
@@ -180,6 +186,9 @@ public class JackTokenizer
     }
     static String Identifier()
     {
+        //checks the current token is an identifier or not
+        //if it is an identifier, the current token will be returned
+        //else error will be printed
         if (currentTokenType == TYPE.IDENTIFIER)
         {
             return currentToken;
@@ -191,6 +200,9 @@ public class JackTokenizer
     }
     static int IntegerValue()
     {
+        //checks the current token is an integer value or not
+        //if it is an integer, the integer constant will be returned
+        //else error will be printed
         if(currentTokenType == TYPE.INTEGERCONSTANT)
         {
             return Integer.parseInt(currentToken);
@@ -202,7 +214,9 @@ public class JackTokenizer
     }
     static String StringValue()
     {
-
+        //checks the current token is a string or not
+        //if it is a string, the current token will be returned
+        //else error will be printed
         if (currentTokenType == TYPE.STRINGCONSTANT)
         {
             return currentToken.substring(1, currentToken.length() - 1);
@@ -222,10 +236,12 @@ public class JackTokenizer
     }
     static boolean IsOperation()
     {
+        // checks the hashmap opset contains the symbol 
         return opSet.contains(Symbol());
     }
     static String Comments(String strIn)
     {
+        //form comment handling
         int position = strIn.indexOf("//");
         if (position != -1)
         {
@@ -235,8 +251,8 @@ public class JackTokenizer
     }
     static String Space(String strIn)
     {
+        //for white space
         String result = "";
-
         if (strIn.length() != 0)
         {
             String[] segs = strIn.split(" ");
@@ -250,6 +266,7 @@ public class JackTokenizer
     }
     static String BlockComments(String strIn)
     {
+        //handling block comments
         int startIndex = strIn.indexOf("/*");
         if (startIndex == -1) 
         {
@@ -271,10 +288,12 @@ public class JackTokenizer
     }
     static TYPE token() 
     {
+        // to return the current tokentype
         return currentTokenType;
     }
     static String CurrentToken() 
     {
+        //to return currenttoken
         return currentToken;
     }
 }

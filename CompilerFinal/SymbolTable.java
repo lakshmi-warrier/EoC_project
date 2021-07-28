@@ -61,6 +61,7 @@ public class SymbolTable
     static Symbol.KIND kindOf(String name)
     {
         Symbol symbol = lookUp(name);
+
         if (symbol != null) 
         {
             return symbol.getKind();
@@ -70,6 +71,7 @@ public class SymbolTable
     static String typeOf(String name)
     {
         Symbol symbol = lookUp(name);
+
         if (symbol != null) 
         {
             return symbol.getType();
@@ -78,7 +80,8 @@ public class SymbolTable
     }
     static int indexOf(String name)
     {
-        Symbol symbol = lookUp(name);
+        Symbol symbol = lookUp(name);//to take the token name
+        
         if (symbol != null)
         {
             return symbol.getIndex();
