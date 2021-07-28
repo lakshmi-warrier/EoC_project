@@ -15,6 +15,7 @@ public class CompilationEngine
         symbolTable = new SymbolTable();
         LabelCount = 0;
     }
+
     static String Function()
     {
         if (Class.length() != 0 && Subroutine.length() !=0)
@@ -23,6 +24,7 @@ public class CompilationEngine
         }
         return "";
     }
+
     static String CompilerParse()
     {
         JackTokenizer.Advance();
@@ -42,7 +44,7 @@ public class CompilationEngine
         //checks if the code starts with class
         JackTokenizer.Advance();
 
-        // if it dosen't starts with class, it will goes to the method error to show where the error has happened
+        // if it dosen't start with the word class, it will go to the method error to show where the error has occured
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD || JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.CLASS)
         {
             error("class"); // goes to the method error
@@ -51,20 +53,20 @@ public class CompilationEngine
         //checks the className
         JackTokenizer.Advance(); 
 
-        // checks if the class name is an identifier
+        // checks if the class name is an identifier w.r.t the rules of naming an identifier
         // if not an identifier it shows an error
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("className");
         }
 
-        //classname does not need to be put in symbol table
+        //classname need not be put in the symbol table
         Class = JackTokenizer.Identifier();
 
         //'{'
         Symbol('{');
 
-        //classVarDec* subroutineDec*
+        //class variable declarations are handled first and then subroutine declarations
         CompilerClassVarDec();
         CompileSubroutine();
 
@@ -79,9 +81,10 @@ public class CompilationEngine
         //save file
         VMWriter.close();
     }
+
     static void CompilerClassVarDec()
     {
-        //first determine whether there is a classVarDec, nextToken is } or start subroutineDec
+        //first determine whether there is a classVarDec, nextToken is }, or start subroutineDec
         JackTokenizer.Advance();
 
         //next is a '}'
@@ -97,19 +100,20 @@ public class CompilationEngine
             error("Keywords");
         }
 
-        //next is subroutineDec
+        //next is subroutineDec - subroutine can be of three types: constructor, method and function
         if (JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.CONSTRUCTOR || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.FUNCTION || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.METHOD)
         {
             JackTokenizer.Pointer();
             return;
         }
 
-        //classVarDec exists
+        //if class variable declarations exist but doesnt match with 'static' or 'field', throw an error
         if (JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.STATIC && JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.FIELD)
         {
             error("static or field");
         }
 
+        //just re-initialising kind, type and name
         Symbol.KIND kind = null;
         String type = "";
         String name = "";
@@ -137,6 +141,8 @@ public class CompilationEngine
         {
             //varName
             JackTokenizer.Advance();
+
+            //if toke doesnt conform to the rules of an identifier, throw an error
             if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
             {
                 error("identifier");
@@ -144,6 +150,7 @@ public class CompilationEngine
 
             name = JackTokenizer.Identifier();
 
+            //add the identifier tot he table
             SymbolTable.define(name,type,kind);
 
             //',' or ';'
@@ -153,6 +160,7 @@ public class CompilationEngine
             {
                 error("',' or ';'");
             }
+            //; represents end of line
             if (JackTokenizer.Symbol() == ';')
             {
                 break;
@@ -174,6 +182,8 @@ public class CompilationEngine
         }
 
         //start of a subroutine
+        
+        // if the subroutine declaration doesnt start with method, constructor or function, throw an error
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD || (JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.CONSTRUCTOR && JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.FUNCTION && JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.METHOD))
         {
             error("constructor|function|method");
@@ -203,6 +213,8 @@ public class CompilationEngine
 
         //subroutineName which is a identifier
         JackTokenizer.Advance();
+
+        //if the function name doesnt match with the rules of naming an identifier, throw an error
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("subroutineName");
@@ -220,6 +232,7 @@ public class CompilationEngine
 
         //subroutineBody
         compileSubroutineMain(keyword);
+        //call recursively till a '}' is found
         CompileSubroutine();
 
     }
@@ -274,6 +287,8 @@ public class CompilationEngine
         }
 
         //next is 'let'|'if'|'while'|'do'|'return'
+
+        //each line should begin with a keyword. If not, throw an error
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD)
         {
             error("keyword");
@@ -307,7 +322,8 @@ public class CompilationEngine
                     break;
                 }
                 default:
-                {
+                {        
+                    //if the token is not any one of those mentioned, throw an error
                     error("'let'|'if'|'while'|'do'|'return'");
                 }
             }
@@ -317,7 +333,7 @@ public class CompilationEngine
     static void ParameterList()
     {
 
-        //check if there is parameterList, if next token is ')' than go back
+        //check if there is parameterList, if next token is ')' then go back
         JackTokenizer.Advance();
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == ')')
         {
@@ -336,20 +352,25 @@ public class CompilationEngine
 
             //varName
             JackTokenizer.Advance();
+            //if variable name doesnt match with rules of naming an identifier, throw error
             if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
             {
                 error("identifier");
             }
 
+            //if the name is alright, add the variable to the symbol table
             SymbolTable.define(JackTokenizer.Identifier(),type, Symbol.KIND.ARG);
 
             //',' or ')'
             JackTokenizer.Advance();
+
+            //parameter list should have only symbols , or )
             if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != ',' && JackTokenizer.Symbol() != ')'))
             {
                 error("',' or ')'");
             }
 
+            //end of parameterlist
             if (JackTokenizer.Symbol() == ')')
             {
                 JackTokenizer.Pointer();
@@ -357,12 +378,14 @@ public class CompilationEngine
             }
         }
     }
+
+    //variable declarations
     static void VarDec()
     {
         //determine if there is a varDec
         JackTokenizer.Advance();
 
-        //no 'var' go back
+        //if no 'var', then go back
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD || JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.VAR)
         {
             JackTokenizer.Pointer();
@@ -376,25 +399,33 @@ public class CompilationEngine
             //varName
             JackTokenizer.Advance();
 
+            //if the identifier name doesnt match with the rules of naming, throw an error
             if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
             {
                 error("identifier");
             }
+            //else, add the variable to the table
             SymbolTable.define(JackTokenizer.Identifier(),type, Symbol.KIND.VAR);
 
             //',' or ';'
             JackTokenizer.Advance();
+
+            //no symbols other than , or ; is legal in variable declaration
             if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != ',' && JackTokenizer.Symbol() != ';'))
             {
                 error("',' or ';'");
             }
+
+            //end of a line in variable declaration
             if (JackTokenizer.Symbol() == ';')
             {
                 break;
             }
         }
+        //call recursively until the variable declaration is over
         VarDec();
     }
+
     static void Do()
     {
         //subroutineCall
@@ -411,6 +442,7 @@ public class CompilationEngine
         //varName
         JackTokenizer.Advance();
 
+        // if the token name doesnt match with the identifier naming conventions, throw an error
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("varName");
@@ -419,6 +451,7 @@ public class CompilationEngine
 
         //'[' or '='
         JackTokenizer.Advance();
+        
         if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != '[' && JackTokenizer.Symbol() != '='))
         {
             error("'['|'='");
@@ -470,8 +503,10 @@ public class CompilationEngine
             VMWriter.writePop(segment(SymbolTable.kindOf(varName)), SymbolTable.indexOf(varName));
         }
     }
+
     static VMWriter.SEGMENT segment(Symbol.KIND kind)
     {
+        
         switch (kind)
         {
             case FIELD:
@@ -725,6 +760,8 @@ public class CompilationEngine
     static void SubroutineCall()
     {
         JackTokenizer.Advance();
+
+        //if the subroutine name doesnt match the rules of naming an identifier, throw error
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("identifier");
@@ -739,7 +776,7 @@ public class CompilationEngine
             VMWriter.writePush(VMWriter.SEGMENT.POINTER,0);
 
             //'(' expressionList ')'
-            //expressionList
+            //expressionList returns the number of arguments of the subroutine
             nArgs = ExpressionList() + 1;
 
             //')'
@@ -749,7 +786,7 @@ public class CompilationEngine
         }
         else if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '.')
         {
-            //(className|varName) '.' subroutineName '(' expressionList ')'
+            //format: (className|varName) '.' subroutineName '(' expressionList ')'
             String objName = name;
 
             //subroutineName
@@ -760,16 +797,18 @@ public class CompilationEngine
                 error("identifier");
             }
             name = JackTokenizer.Identifier();
-
-            //check for if it is built-in type
+           
             String type = SymbolTable.typeOf(objName);
 
+            //check if it is built-in type, i.e, int, boolean, char or void
+            //built-in types doesnt have subroutines
             if (type.equals("int")||type.equals("boolean")||type.equals("char")||type.equals("void"))
             {
                 error("no built-in type");
             }
             else if (type.equals(""))
             {
+                //user-defined
                 name = objName + "." + name;
             }
             else 
@@ -876,6 +915,7 @@ public class CompilationEngine
     }
     static int ExpressionList()
     {
+        //returns the number of the arguments in a function
         int nArgs = 0;
         JackTokenizer.Advance();
 
