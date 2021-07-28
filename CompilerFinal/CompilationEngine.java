@@ -29,7 +29,7 @@ public class CompilationEngine
         JackTokenizer.Advance();
 
         // check if the line is keyword
-        // Also, if the keyword is int|keyword|boolean
+        // Also, if the keyword is int|char|boolean
         // if yes, the corresponding token is returned
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && (JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.INT || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.CHAR || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.BOOLEAN))
         {
@@ -45,7 +45,7 @@ public class CompilationEngine
         
         // if all the above is failed, an error is being showed.
         error("in|char|boolean|className");
-        
+
         return "";
     }
     public void ClassCompiler()
@@ -150,7 +150,9 @@ public class CompilationEngine
             }
         }
 
-        //type
+        // gets the type of keyword
+        // if it is int|boolean|char|identifier
+        // it is being stored as
         type = CompilerParse();
 
         //at least one varName
