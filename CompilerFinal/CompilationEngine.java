@@ -365,7 +365,6 @@ public class CompilationEngine
                 }
             }
         }
-        
         StatementCompile();
     }
     static void ParameterList()
@@ -467,7 +466,8 @@ public class CompilationEngine
         //subroutineCall
         SubroutineCall();
 
-        //';'
+        //checks if the ';' is present
+        //if not present the corresponding error is shown
         Symbol(';');
 
         //pop return value
@@ -539,6 +539,7 @@ public class CompilationEngine
     }
     static VMWriter.SEGMENT segment(Symbol.KIND kind)
     {
+        // the corresponding vm code is being written to the vm file
         switch (kind)
         {
             case FIELD:
@@ -572,26 +573,26 @@ public class CompilationEngine
         //top label for while loop
         VMWriter.writeLabel(topLabel);
 
-        //'('
+        //checks if the opening bracket is present or not
         Symbol('(');
 
         //expression while condition: true or false
         Expression();
 
-        //')'
+        //checks if the closing bracket is present or not
         Symbol(')');
 
         //if ~(condition) go to continue label
         VMWriter.writeArithmetic(VMWriter.COMMAND.NOT);
         VMWriter.writeIf(continueLabel);
 
-        //'{'
+        //checks if the opening bracket is present or not
         Symbol('{');
 
         //statements
         StatementCompile();
 
-        //'}'
+        //checks if the closing bracket is present or not
         Symbol('}');
 
         //if (condition) go to top label
@@ -618,11 +619,14 @@ public class CompilationEngine
         {
             //expression exist
             JackTokenizer.Pointer();
+
             //expression
             Expression();
-            //';'
+
+            //checks if the symbol ';' is present
             Symbol(';');
         }
+        // the vm code for return is being written to the vm file
         VMWriter.writeReturn();
     }
     static void If()
@@ -630,42 +634,44 @@ public class CompilationEngine
         String elseLabel = Label();
         String endLabel = Label();
 
-        //'('
+        //checks if the opening bracket is present or not
         Symbol('(');
 
         //expression
         Expression();
 
-        //')'
+        //checks if the closing bracket is present or not
         Symbol(')');
 
         //if ~(condition) go to else label
         VMWriter.writeArithmetic(VMWriter.COMMAND.NOT);
         VMWriter.writeIf(elseLabel);
 
-        //'{'
+        //checks if the opening bracket is present or not
         Symbol('{');
 
         //statements
         StatementCompile();
 
-        //'}'
+        //checks if the closing bracket is present or not
         Symbol('}');
 
         //if condition after statement finishing, go to end label
         VMWriter.writeGoto(endLabel);
 
-        VMWriter.writeLabel(elseLabel);
-
         //check if there is 'else'
+        VMWriter.writeLabel(elseLabel);
+        
         JackTokenizer.Advance();
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.ELSE)
         {
-            //'{'
+            //checks if the opening bracket is present or not
             Symbol('{');
+
             //statements
             StatementCompile();
-            //'}'
+
+            //checks if the closing bracket is present or not
             Symbol('}');
         }
         else 
@@ -694,7 +700,7 @@ public class CompilationEngine
                 //expression
                 Expression();
 
-                //']'
+                //checks if the closing bracket is present or not
                 Symbol(']');
 
                 //base+offset
@@ -765,7 +771,7 @@ public class CompilationEngine
                 //expression
                 Expression();
 
-                //')'
+                //checks if the closing bracket is present or not
                 Symbol(')');
             }
             else if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && (JackTokenizer.Symbol() == '-' || JackTokenizer.Symbol() == '~'))
@@ -774,6 +780,7 @@ public class CompilationEngine
 
                 //term
                 Term();
+                
                 if (s == '-')
                 {
                     VMWriter.writeArithmetic(VMWriter.COMMAND.NEG);
@@ -793,15 +800,22 @@ public class CompilationEngine
     static void SubroutineCall()
     {
         JackTokenizer.Advance();
+
+        // checks if the token is an identifier or not
+        // if not, an error will be shown
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("identifier");
         }
+
+        //the identifier is stored as a string name
         String name = JackTokenizer.Identifier();
 
         int nArgs = 0;
 
         JackTokenizer.Advance();
+
+        //checks if the token is a symbol or not
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '(')
         {
             //push this pointer
@@ -813,6 +827,7 @@ public class CompilationEngine
 
             //')'
             Symbol(')');
+
             //call subroutine
             VMWriter.writeCall(Class + '.' + name, nArgs);
         }
@@ -844,31 +859,32 @@ public class CompilationEngine
             else 
             {
                 nArgs = 1;
+
                 //push variable directly onto stack
                 VMWriter.writePush(segment(SymbolTable.kindOf(objName)), SymbolTable.indexOf(objName));
                 name = SymbolTable.typeOf(objName) + "." + name;
             }
 
-            //'('
+            //checks if the opening bracket is present or not
             Symbol('(');
 
             //expressionList
             nArgs += ExpressionList();
 
-            //')'
+            //checks if the closing bracket is present or not
             Symbol(')');
 
             //call subroutine
             VMWriter.writeCall(name,nArgs);
         }
-        else 
+        else // shows an error 
         {
             error("'('|'.'");
         }
     }
     static void Expression() // to write the vm command add, sub, gt, lt into the vm file
     {
-        //term
+        // the corresponding vm codes are being written onto the vm file of the terms
         Term();
         
         //(op term)*
@@ -876,7 +892,7 @@ public class CompilationEngine
         {
             JackTokenizer.Advance();
 
-            //op
+            //checks if the token is a symbol and an operation
             if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.IsOperation())
             {
                 String opCmd = "";
@@ -937,10 +953,10 @@ public class CompilationEngine
                 //term
                 Term();
 
-                //
+                //write the corresponding vm command to vm file
                 VMWriter.writeCommand(opCmd,"","");
             }
-            else 
+            else  // breaks the loop
             {
                 JackTokenizer.Pointer();
                 break;
@@ -962,21 +978,23 @@ public class CompilationEngine
             nArgs = 1;
             JackTokenizer.Pointer();
 
-            //expression
+            //if an operation like +|-|.... the corresponding vm codes are written onto the vm file
             Expression();
             
             //(','expression)*
             while (true) 
             {
                 JackTokenizer.Advance();
+                // checks if the token is a symbol and a ','
                 if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == ',')
                 {
-                    //expression
+                    //if an operation like +|-|.... the corresponding vm codes are written onto the vm file
                     Expression();
                     nArgs++;
                 }
                 else 
                 {
+                    //else breaks the loop
                     JackTokenizer.Pointer();
                     break;
                 }
@@ -986,6 +1004,7 @@ public class CompilationEngine
     }
     static void error(String val)
     {
+        //to print the error statement
         throw new IllegalStateException("Expected token missing : " + val + " Current token:" + JackTokenizer.CurrentToken());
     }
     static void Symbol(char symbol)

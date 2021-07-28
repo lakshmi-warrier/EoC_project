@@ -24,7 +24,9 @@ public class Symbol
     {
         return index;
     }
+    
     @Override
+
     public String toString() 
     {
         return "Symbol{" +
