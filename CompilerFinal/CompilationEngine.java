@@ -190,6 +190,8 @@ public class CompilationEngine
                 break;
             }
         }
+        
+        // calls the same method till the class variable ends
         CompilerClassVarDec();
     }
     static void CompileSubroutine()
