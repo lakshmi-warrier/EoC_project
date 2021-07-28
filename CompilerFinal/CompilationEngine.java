@@ -160,11 +160,15 @@ public class CompilationEngine
         {
             //varName
             JackTokenizer.Advance();
+
+            // checks if the variable name is an identifier or not
+            // if not a identifier, an error is shown
             if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
             {
                 error("identifier");
             }
 
+            // the identifie is stored as name
             name = JackTokenizer.Identifier();
 
             SymbolTable.define(name,type,kind);

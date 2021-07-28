@@ -7,9 +7,14 @@ public class SymbolTable
 
     public SymbolTable() 
     {
+        //for STATIC, FIELD
         classSymbols = new HashMap<String, Symbol>();
+
+        //for ARG, VAR
         subroutineSymbols = new HashMap<String, Symbol>();
+
         indices = new HashMap<Symbol.KIND, Integer>();
+
         indices.put(Symbol.KIND.ARG,0);
         indices.put(Symbol.KIND.FIELD,0);
         indices.put(Symbol.KIND.STATIC,0);
@@ -26,6 +31,7 @@ public class SymbolTable
         if (kind == Symbol.KIND.ARG || kind == Symbol.KIND.VAR)
         {
             int index = indices.get(kind);
+            System.out.println(index);
             Symbol symbol = new Symbol(type,kind,index);
             indices.put(kind,index+1);
             subroutineSymbols.put(name,symbol);

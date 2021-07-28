@@ -52,7 +52,7 @@ push constant 110
 call String.appendChar 2
 push constant 100
 call String.appendChar 2
-call Output.printString 1
+call Output.printString 2
 pop temp 0
 push constant 0
 return  
@@ -101,7 +101,7 @@ push constant 110
 call String.appendChar 2
 push constant 100
 call String.appendChar 2
-call Output.printString 1
+call Output.printString 3
 pop temp 0
 push constant 0
 return  
@@ -224,17 +224,17 @@ push constant 32
 call String.appendChar 2
 push constant 32
 call String.appendChar 2
-call Output.printString 1
+call Output.printString 4
 pop temp 0
 push argument 0
 push argument 1
-call ArrayUtils.print 2
+call ArrayUtils.print 6
 pop temp 0
 push constant 0
 return  
 function ArrayUtils.reverse 3
 push argument 1
-call Array.new 1
+call Array.new 7
 pop local 2
 push constant 0
 pop local 0
@@ -314,11 +314,11 @@ push constant 32
 call String.appendChar 2
 push constant 32
 call String.appendChar 2
-call Output.printString 1
+call Output.printString 8
 pop temp 0
 push local 2
 push argument 1
-call ArrayUtils.print 2
+call ArrayUtils.print 10
 pop temp 0
 push constant 0
 return  
@@ -336,13 +336,13 @@ push local 0
 add  
 pop pointer 1
 push that 0
-call Output.printInt 1
+call Output.printInt 11
 pop temp 0
 push constant 1
 call String.new 1
 push constant 32
 call String.appendChar 2
-call Output.printString 1
+call Output.printString 12
 pop temp 0
 push local 0
 push constant 1
@@ -354,7 +354,7 @@ push constant 0
 return  
 function ArrayUtils.arrayToString 2
 push constant 100
-call String.new 1
+call String.new 13
 pop local 1
 push constant 0
 pop local 0
@@ -379,7 +379,7 @@ pop local 0
 goto LABEL_15 
 label LABEL_14 
 push local 1
-call Output.printString 1
+call Output.printString 3
 pop temp 0
 push constant 0
 return  
