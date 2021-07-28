@@ -168,18 +168,23 @@ public class CompilationEngine
                 error("identifier");
             }
 
-            // the identifie is stored as name
+            // the identifier is stored as name
             name = JackTokenizer.Identifier();
 
+            // the symbol,type of varibale and identifiers are added to symbol table
             SymbolTable.define(name,type,kind);
 
-            //',' or ';'
+            //checks for (, or ;)
             JackTokenizer.Advance();
 
+            // if the symbol is not , or ;
+            // it shows an error
             if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != ',' && JackTokenizer.Symbol() != ';'))
             {
                 error("',' or ';'");
             }
+
+            // if the symbol is ; the loop gets breaks
             if (JackTokenizer.Symbol() == ';')
             {
                 break;
