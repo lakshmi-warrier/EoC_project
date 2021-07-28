@@ -1,4 +1,5 @@
 import java.io.*;
+
 public class CompilationEngine 
 {
     static VMWriter vmWriter;
@@ -79,7 +80,7 @@ public class CompilationEngine
             throw new IllegalStateException("Unexpected tokens");
         }
 
-        //save file
+        //saves the file
         VMWriter.close();
     }
     static void CompilerClassVarDec()
@@ -87,14 +88,16 @@ public class CompilationEngine
         //first determine whether there is a classVarDec, nextToken is } or start subroutineDec
         JackTokenizer.Advance();
 
-        //next is a '}'
+        //checks if the next line is a }
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '}')
         {
             JackTokenizer.Pointer();
             return;
         }
 
-        //next is start subroutineDec or classVarDec, both start with keyword
+        //next is start subroutine or classVariable, both start with keyword
+        // checks if it is  keyword or not
+        // if not a keyword, it shows an error
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD)
         {
             error("Keywords");
@@ -868,7 +871,7 @@ public class CompilationEngine
                         break;
                     }
                 }
-                
+
                 //term
                 Term();
 
@@ -885,8 +888,7 @@ public class CompilationEngine
     static int ExpressionList()
     {
         JackTokenizer.Advance();
-        System.out.println(JackTokenizer.currentTokenType);
-        System.out.println(JackTokenizer.token());
+
         //determine if there is any expression, if next is ')' then no
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == ')')
         {
