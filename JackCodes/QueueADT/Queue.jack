@@ -5,6 +5,7 @@ class Queue
 	field int rear;
 	field int elem;
 	field int length;
+
 	constructor Queue new(int size)
 	{
 		let arr = Array.new(size);
@@ -38,6 +39,7 @@ class Queue
 		}
 		return;
 	}
+
 	method void getfront()
 	{
 		if((rear=-1) & (front =-1))
@@ -52,6 +54,7 @@ class Queue
 		}
 		return;
 	}
+
 	method void dequeue()
 	{
 		if((rear=-1) & (front =-1))
@@ -75,6 +78,7 @@ class Queue
 		}
 		return;
 	}
+
 	method void dequeuePrint()
 	{
 		if((rear=-1) & (front =-1))
@@ -98,6 +102,7 @@ class Queue
 		}
 		return;
 	}
+	
 	method void print()
 	{
 		var int i;

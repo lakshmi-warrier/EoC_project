@@ -14,13 +14,16 @@ class ArrayUtils
 		    if(arr[pos]=a)
 			{
 			   do Output.printString("Element found");
+			   do Output.println();
 			   return;
 			}
 			let pos = pos + 1;
 		}
 		do Output.printString("Element not found");
+		do Output.println();
 		return;
 	}
+	
 	
 	function void sort(Array arr, int len)
 	{
@@ -42,10 +45,13 @@ class ArrayUtils
 			}
 			let i = i + 1;
 		}
+		do Output.println();
 		do Output.printString("Sorted Array is -  ");
 		do ArrayUtils.print(arr,len);
+		do Output.println();
 		return;
 	}
+	
 	
     function void reverse(Array arr, int len)
     {	
@@ -54,19 +60,20 @@ class ArrayUtils
 		let newArray=Array.new(len);
 		let i = 0;
 		let j=len;
-		
 		while(i<len)
 		{
-		   let newArray[j-1]=arr[i];
-		   let i=i+1;
-		   let j=j-1;
-		   
-		}
+		let newArray[j-1]=arr[i];
+		let i=i+1;
+		let j=j-1;
 		
+		}
+		do Output.println();
 		do Output.printString("Reversed Array is -  ");
 		do ArrayUtils.print(newArray,len);
+		do Output.println();
 		return;
-    }
+  	}
+
 
 	function void print(Array arr, int len)
 	{
@@ -80,7 +87,7 @@ class ArrayUtils
 		}
 		return;
 	}
-	
+
 	function void arrayToString(Array arr, int len)
 	{
 		var int position;
@@ -95,4 +102,5 @@ class ArrayUtils
 		do Output.printString(newStr);
 		return;
 	}
+
 }
