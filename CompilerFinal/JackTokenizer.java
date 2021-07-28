@@ -68,6 +68,7 @@ public class JackTokenizer
             String preprocessed = "";
             String line = "";
 
+            //white space and comments are being handled
             while(scanner.hasNext())
             {
                 line = Comments(scanner.nextLine()).trim();
@@ -100,6 +101,7 @@ public class JackTokenizer
     static void Check()
     {
         keyWordReg = "";
+        // to set the keywords like static|void|method|var|constructor|false|this|do|while|int|boolean|field|null|else|function|char|true|let|class|if|return|
         for (String seg: keyWordMap.keySet())
         {
             keyWordReg += seg + "|";
@@ -118,6 +120,7 @@ public class JackTokenizer
     }
     static void Advance()
     {
+        // checks if the the tokken type matches with the keyword, symbol, integer constant, string constant or identifier
         if (HasMoreTokens()) 
         {
             currentToken = tokens.get(pointer);
@@ -151,6 +154,7 @@ public class JackTokenizer
         {
             throw new IllegalArgumentException("Unknown token:" + currentToken);
         }
+        
     }
     static KEYWORD KeyWords()
     {

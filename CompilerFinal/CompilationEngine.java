@@ -39,16 +39,20 @@ public class CompilationEngine
     }
     public void ClassCompiler()
     {
-        //'class'
+        //checks if the code starts with class
         JackTokenizer.Advance();
+
+        // if it dosen't starts with class, it will goes to the method error to show where the error has happened
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD || JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.CLASS)
         {
-            System.out.println(JackTokenizer.CurrentToken());
-            error("class");
+            error("class"); // goes to the method error
         }
 
-        //className
-        JackTokenizer.Advance();
+        //checks the className
+        JackTokenizer.Advance(); 
+
+        // checks if the class name is an identifier
+        // if not an identifier it shows an error
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("className");
@@ -77,12 +81,12 @@ public class CompilationEngine
     }
     static void CompilerClassVarDec()
     {
-
         //first determine whether there is a classVarDec, nextToken is } or start subroutineDec
         JackTokenizer.Advance();
 
         //next is a '}'
-        if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '}'){
+        if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '}')
+        {
             JackTokenizer.Pointer();
             return;
         }
