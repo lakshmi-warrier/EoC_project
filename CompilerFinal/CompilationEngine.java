@@ -190,7 +190,7 @@ public class CompilationEngine
             }
         }
         
-        // calls the same method till the class variable ends
+        // the method is being called unless ';' is being found
         CompilerClassVarDec();
     }
     static void CompileSubroutine()
@@ -286,7 +286,7 @@ public class CompilationEngine
         //statements
         StatementCompile();
 
-        //'}'
+        //checks if it has the symbol '}'
         Symbol('}');
     }
     static void writeFunctionDec(JackTokenizer.KEYWORD keyword)
@@ -323,16 +323,19 @@ public class CompilationEngine
         }
 
         //next is 'let'|'if'|'while'|'do'|'return'
+        // if not an error is shown
         if (JackTokenizer.token() != JackTokenizer.TYPE.KEYWORD)
         {
             error("keyword");
         }
         else 
         {
-            switch (JackTokenizer.KeyWords()){
+            switch (JackTokenizer.KeyWords())
+            {
+                // goes to the corresponding methos and the corresponding vm code is generated and written to the vm file 
                 case LET:
                 {
-                    Let();
+                    Let(); 
                     break;
                 }
                 case IF:
@@ -357,10 +360,12 @@ public class CompilationEngine
                 }
                 default:
                 {
+                    // if the above keywords are not found, an error will be shown
                     error("'let'|'if'|'while'|'do'|'return'");
                 }
             }
         }
+        
         StatementCompile();
     }
     static void ParameterList()
@@ -423,30 +428,38 @@ public class CompilationEngine
             return;
         }
 
-        //type
+        //checks if it is int|char|boolean and stored as type 
         String type = CompilerParse();
+
         while(true)
         {
             //varName
             JackTokenizer.Advance();
 
+            // if the varname is not an identifier an error is being shown
             if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
             {
                 error("identifier");
             }
+
+            // the varname is being added to symboltable subroutine symbols
             SymbolTable.define(JackTokenizer.Identifier(),type, Symbol.KIND.VAR);
 
-            //',' or ';'
+            //checks if the symbols are ',' or ';'
+            // if not an error will be shown
             JackTokenizer.Advance();
             if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != ',' && JackTokenizer.Symbol() != ';'))
             {
                 error("',' or ';'");
             }
+
+            // if the symbol is ';' the loop breaks
             if (JackTokenizer.Symbol() == ';')
             {
                 break;
             }
         }
+        // the method is being called unless ';' is being found
         VarDec();
     }
     static void Do()
