@@ -28,19 +28,29 @@ public class SymbolTable
     }
     static void define(String name, String type, Symbol.KIND kind)
     {
+        // if the type is arg | var
         if (kind == Symbol.KIND.ARG || kind == Symbol.KIND.VAR)
         {
             int index = indices.get(kind);
-            System.out.println(index);
             Symbol symbol = new Symbol(type,kind,index);
-            indices.put(kind,index+1);
+
+            // the arg|var are being stored into hashamp named indices with an index number
+            indices.put(kind,index+1); 
+
+            //the identifier and the symbol are being stored into the hashamp named subroutine symbol
             subroutineSymbols.put(name,symbol);
         }
+
+        // if the type is static|field
         else if(kind == Symbol.KIND.STATIC || kind == Symbol.KIND.FIELD)
         {
             int index = indices.get(kind);
             Symbol symbol = new Symbol(type,kind,index);
+
+            // the static|field are being stored into hashamp named indices with an index number
             indices.put(kind,index+1);
+
+            //the identifier and the symbol are being stored into the hashamp named classsymbols symbol
             classSymbols.put(name,symbol);
         }
     }
