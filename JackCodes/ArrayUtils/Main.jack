@@ -2,44 +2,27 @@ class Main{
     function void main () 
 	{
     
-		var Array arr;
-		var int length,i,searchElement;
-		let length = Keyboard.readInt("Enter size :");
-		let arr= Array.new(length);
-		
-		let i=0;
-		while(i<length)
-		{
-		let arr[i]=Keyboard.readInt("Enter number : ");
-		let i = i+1;
-		}
-		
-		do Output.println();
-		do Output.printString("Array:");
-		do ArrayUtils.print(arr,length);					
-		do Output.println();
-		
-		do Output.println();
-		let searchElement=Keyboard.readInt("Enter the element to be searched : ");
-		
-		do Output.println();
-		do Output.printString(" SEARCH ARRAY: ");
-		do ArrayUtils.search(arr,searchElement,length);    
-		
-		
-		do Output.println();
-		do Output.printString(" SORT ARRAY: ");
-		do ArrayUtils.sort(arr,length);                   
-		
-		do Output.println();
-		do Output.printString(" REVERSE ARRAY: ");
-		do ArrayUtils.reverse(arr,length);                 
-		
-		do Output.println();
-		do Output.printString("Array to string : ");
-		do ArrayUtils.arrayToString(arr,length);
-		
-		return;
+    var Array arr;
+	var int length,i,searchElement;
+	let length = Keyboard.readInt("Enter size :");
+    let arr= Array.new(length);
+	
+	let i=0;
+	while(i<length)
+	{
+	  let arr[i]=Keyboard.readInt("Enter number : ");
+	  let i = i+1;
+	}
+	//let searchElement=Keyboard.readInt("Enter the element to be searched : ");
+	//do ArrayUtils.search(arr,searchElement,length);    //working
+	
+	// do ArrayUtils.sort(arr,length);                   //working
+	//do ArrayUtils.reverse(arr,length);                 //working
+	//do ArrayUtils.arrayToString(arr,length);
+	
+	do Output.printString("Array:");
+	do ArrayUtils.print(arr,length);					//working
+    return;
     
-    }
+     }
 }
