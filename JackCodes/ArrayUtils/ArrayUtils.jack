@@ -54,52 +54,53 @@ class ArrayUtils
 	
 	
     function void reverse(Array arr, int len)
-   {	
-	var int i,j;
-	var Array newArray;
-	let newArray=Array.new(len);
-	let i = 0;
-	let j=len;
-	while(i<len)
-	{
-	   let newArray[j-1]=arr[i];
-	   let i=i+1;
-	   let j=j-1;
-	   
-	}
-	do Output.println();
-	do Output.printString("Reversed Array is -  ");
-	do ArrayUtils.print(newArray,len);
-	do Output.println();
-	return;
-  }
+    {	
+		var int i,j;
+		var Array newArray;
+		let newArray=Array.new(len);
+		let i = 0;
+		let j=len;
+		while(i<len)
+		{
+		let newArray[j-1]=arr[i];
+		let i=i+1;
+		let j=j-1;
+		
+		}
+		do Output.println();
+		do Output.printString("Reversed Array is -  ");
+		do ArrayUtils.print(newArray,len);
+		do Output.println();
+		return;
+  	}
 
 
-function void print(Array arr, int len)
-{
-	var int i;
-	let i=0;
-	while(i<len)
+	function void print(Array arr, int len)
 	{
-		do Output.printInt(arr[i]);
-		do Output.printString(" ");
-		let i= i+1;
+		var int i;
+		let i=0;
+		while(i<len)
+		{
+			do Output.printInt(arr[i]);
+			do Output.printString(" ");
+			let i= i+1;
+		}
+		return;
 	}
-	return;
-}
-function void arrayToString(Array arr, int len)
-{
-	var int position;
-	var String newStr;
-	let newStr=String.new(100);
-	let position = 0;
-	while(position<len)
+
+	function void arrayToString(Array arr, int len)
 	{
-		do newStr.appendChar(arr[position]);
-		let position=position+1;
+		var int position;
+		var String newStr;
+		let newStr=String.new(100);
+		let position = 0;
+		while(position<len)
+		{
+			do newStr.appendChar(arr[position]);
+			let position=position+1;
+		}
+		do Output.printString(newStr);
+		return;
 	}
-	do Output.printString(newStr);
-	return;
-}
 
 }

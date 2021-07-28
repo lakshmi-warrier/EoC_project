@@ -9,7 +9,7 @@ class stack
     let length=size;
     let top=-1;
     return this;
-    
+
   }
   method void dispose()
   {
@@ -33,10 +33,10 @@ class stack
   method void pop()
   {
     if(top=-1){
-       do Output.printString("Stack underflow");
-       }
+      do Output.printString("Stack underflow");
+      }
     else{
-       let top=top-1;
+      let top=top-1;
     }
     
     return;
@@ -45,10 +45,10 @@ class stack
   method void peek()
   {
     if(top=-1){
-       do Output.printString("Stack underflow");
+      do Output.printString("Stack underflow");
     }
     else{
-       do Output.printInt(array[top]);
+      do Output.printInt(array[top]);
     }
     return;
   }
@@ -56,10 +56,10 @@ class stack
   method void isempty()
   {
     if(top=-1){
-       do Output.printString("Stack is empty");
+      do Output.printString("Stack is empty");
     }
     else{
-       do Output.printString("Stack is not empty");
+      do Output.printString("Stack is not empty");
     }
     return;
   }
@@ -69,7 +69,7 @@ class stack
     var int i;
     
     if(top=-1){
-       do Output.printString("Stack is empty");
+      do Output.printString("Stack is empty");
     }
     if(~(top=-1))
 	{
@@ -77,15 +77,13 @@ class stack
 	  let i=0;
       while((i<top)|(i=top))
       {
-         do Output.printInt(array[i]);
-         do Output.printString("  ");
-         let i=i+1;
+        do Output.printInt(array[i]);
+        do Output.printString("  ");
+        let i=i+1;
          
       }
     
     }
     return;
-  }
-  
-  
+  }  
 }

@@ -29,18 +29,19 @@ class StringUtils  {
 	 function String substring( String str,int startInd,int endInd )
     {
            
-           var char currentChar;		   
-		   var String finalStr;
-		   let finalStr=String.new(50);
-		   while(startInd<endInd)
-            {
-				    let currentChar = str.charAt(startInd);
-                    do finalStr.appendChar(currentChar);
-                    let startInd=startInd+1;
-		    }
+		var char currentChar;		   
+		var String finalStr;
+		let finalStr=String.new(50);
+		while(startInd<endInd)
+		{
+			let currentChar = str.charAt(startInd);
+			do finalStr.appendChar(currentChar);
+			let startInd=startInd+1;
+		}
 		   
-			return finalStr;
+		return finalStr;
     }
+	
     function char endsWith(String str)
 	{
 	        var int leng;
@@ -71,32 +72,30 @@ class StringUtils  {
 
     function char startsWith(String str)
 	{
-	        var char firstChar;
-			let firstChar = str.charAt(0);
-			return firstChar;
+		var char firstChar;
+		let firstChar = str.charAt(0);
+		return firstChar;
     }
     function void equals(String str1, String str2)
 	{
-	        var int pos;
-		    let pos = 0;
-			if (~(str1.length()= str2.length()))
+		var int pos;
+		let pos = 0;
+		if (~(str1.length()= str2.length()))
+		{
+			do Output.printString("Strings are not equal");
+			return;
+		}
+		
+		while(pos<str1.length())
+		{
+			if(~(str1.charAt(pos)= str2.charAt(pos)))
 			{
-			    do Output.printString("Strings are not equal");
-			    return;
+				do Output.printString("Strings are not equal");
+				return;
 			}
-			
-			while(pos<str1.length())
-			{
-			    if(~(str1.charAt(pos)= str2.charAt(pos)))
-				{
-				    do Output.printString("Strings are not equal");
-				    return;
-				}
-				let pos = pos+1;
-			}
-			do Output.printString("Strings are equal");
-		    return;
+			let pos = pos+1;
+		}
+		do Output.printString("Strings are equal");
+		return;
 	}
-
-
-   }
+}
