@@ -6,63 +6,78 @@ class StringUtils  {
         return;
     }
 
-     function void Contains( String str, char c) 
-	 {
+    function void Contains(String str, char c) 
+	{
 
         var int len,pos;
         let len = str.length();
         let pos = 0;
         while(pos<len) 
-		  {
-            if( str.charAt(pos)=c) 
+		{
+            if(str.charAt(pos)=c) 
 			{ 
 				do Output.printString("Character found");
+				//the execution stops at the first occurence of the required character (making algorithm efficient)
 				return;
 			}
             let pos = pos + 1;
-          }
-		 do Output.printString("Character not found"); 
-         return;
-     }		
+        }
+		do Output.printString("Character not found"); 
+        return;
+    }		
 	
          
-	 function String substring( String str,int startInd,int endInd )
+	function String substring( String str,int startInd,int endInd )
     {
            
 		var char currentChar;		   
 		var String finalStr;
-		let finalStr=String.new(50);
+
+		//length of the substring would be endInd-startInd
+		let finalStr=String.new(endInd-startInd);
 		while(startInd<endInd)
 		{
 			let currentChar = str.charAt(startInd);
+
+			//append each character in the range to the new string - finalStr
 			do finalStr.appendChar(currentChar);
+
+			//increment index so that the next character is chosen in the next iteration
 			let startInd=startInd+1;
 		}
 		   
 		return finalStr;
     }
-	
+
     function char endsWith(String str)
 	{
-	        var int leng;
-	        var char lastChar;
-            let leng = str.length();
-            let lastChar = str.charAt(leng-1);
-            return lastChar;
+		var int leng;
+		var char lastChar;
+		let leng = str.length();
+		let lastChar = str.charAt(leng-1);
+		return lastChar;
 	}
 
     function String concatenate(String str1, String str2)
 	{
-        var String newStr  ;
+        var String newStr;
         var int i;
         let i=0;
+
+		//creating a string to hold the concatenated string
         let newStr = String.new(str1.length()+str2.length());
+
+		//append letter-by-letter from str1
         while(i<str1.length()){
            do newStr.appendChar(str1.charAt(i));
 	    let i= i+1;
         }
+
+		//reset counter to start getting letters from str2
         let i = 0;
-          while(i<str2.length()){
+		
+		//append letter-by-letter from str2
+        while(i<str2.length()){
            do newStr.appendChar(str2.charAt(i));
 	    let i= i+1;
         }
@@ -76,6 +91,7 @@ class StringUtils  {
 		let firstChar = str.charAt(0);
 		return firstChar;
     }
+
     function void equals(String str1, String str2)
 	{
 		var int pos;
@@ -83,6 +99,7 @@ class StringUtils  {
 		if (~(str1.length()= str2.length()))
 		{
 			do Output.printString("Strings are not equal");
+			//the function is exited as soon as the lengths of the strings doesnt match
 			return;
 		}
 		
@@ -91,10 +108,13 @@ class StringUtils  {
 			if(~(str1.charAt(pos)= str2.charAt(pos)))
 			{
 				do Output.printString("Strings are not equal");
+				//the function is exited as soon as first mismatch is found (making algorithm efficient)
 				return;
 			}
 			let pos = pos+1;
 		}
+
+		//if the flow of control reaches this point, it means that the strings are equal
 		do Output.printString("Strings are equal");
 		return;
 	}
