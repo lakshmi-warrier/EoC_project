@@ -7,7 +7,6 @@ public class CompilationEngine
     static SymbolTable symbolTable;
     static String Class;
     static String Subroutine;
-    static int nArgs = 0;
     static int LabelCount;
     public CompilationEngine(File inFile, File outFile) 
     {
@@ -216,55 +215,69 @@ public class CompilationEngine
         }
 
         JackTokenizer.KEYWORD keyword = JackTokenizer.KeyWords();
+
+        // add to symbol table
         SymbolTable.startSubroutine();
 
         //for method this is the first argument
+        // if the token is method, then it gets added to the hashmap subroutineSymbols in the class SymbolTable
         if (JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.METHOD)
         {
-            SymbolTable.define("this",Class, Symbol.KIND.ARG);
+            SymbolTable.define("this",Class, Symbol.KIND.ARG); // add to symboltable
         }
 
         String type = "";
+
         //'void' or type
         JackTokenizer.Advance();
+
+        // checks if the token is there a keyword or not
+        // checks if the keyword is void or not
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.VOID)
         {
+            // if the token is void, string type is being stored as void
             type = "void";
         }
         else 
         {
+            // if not, it will check if the token is int|char|boolean and store it as type
             JackTokenizer.Pointer();
             type = CompilerParse();
         }
 
         //subroutineName which is a identifier
         JackTokenizer.Advance();
+
+        // checks if the subroutine name is an identifier or not
+        //if not, an error will be displayed
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("subroutineName");
         }
+
+        // the identifier is being stored as string subroutine
         Subroutine = JackTokenizer.Identifier();
 
-        //'('
+        //checks if there is the opening bracket '('
         Symbol('(');
 
         //parameterList
         ParameterList();
 
-        //')'
+        //checks if there is an closing bracket ')'
         Symbol(')');
 
         //subroutineBody
-        compileSubroutineMain(keyword);
-        CompileSubroutine();
+        compileSubroutineMain(keyword); // goes to the method compileSubroutineMain()
+        CompileSubroutine(); //goes to method compileSubroutine()
 
     }
     static void compileSubroutineMain(JackTokenizer.KEYWORD keyword)
     {
-        //'{'
+        // checks if there is the opening bracket '{'
         Symbol('{');
 
-        //varDec*
+        //goes to method varDec
         VarDec();
 
         //write VM function declaration
@@ -352,7 +365,6 @@ public class CompilationEngine
     }
     static void ParameterList()
     {
-
         //check if there is parameterList, if next token is ')' than go back
         JackTokenizer.Advance();
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == ')')
@@ -367,25 +379,31 @@ public class CompilationEngine
         JackTokenizer.Pointer();
         while(true)
         {
-            //type
+            //checks if it is int|char|boolean and stored as type
             type = CompilerParse();
 
             //varName
             JackTokenizer.Advance();
+
+            //checks if the token is an identifier or not
+            //if not, an error will be displayed
             if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
             {
                 error("identifier");
             }
 
+            // it being added to the hashtable subroutine symbols
             SymbolTable.define(JackTokenizer.Identifier(),type, Symbol.KIND.ARG);
 
-            //',' or ')'
+            //checks if the symbol is ',' or ')' is present or not
+            // if not present, an error is being shown
             JackTokenizer.Advance();
             if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != ',' && JackTokenizer.Symbol() != ')'))
             {
                 error("',' or ')'");
             }
 
+            // if the symbol is ')' , it goes back 
             if (JackTokenizer.Symbol() == ')')
             {
                 JackTokenizer.Pointer();
@@ -768,6 +786,7 @@ public class CompilationEngine
         }
         String name = JackTokenizer.Identifier();
 
+        int nArgs = 0;
 
         JackTokenizer.Advance();
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '(')
@@ -917,6 +936,7 @@ public class CompilationEngine
     }
     static int ExpressionList()
     {
+        int nArgs = 0;
         JackTokenizer.Advance();
 
         //determine if there is any expression, if next is ')' then no
