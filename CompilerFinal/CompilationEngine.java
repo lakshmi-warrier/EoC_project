@@ -27,15 +27,25 @@ public class CompilationEngine
     static String CompilerParse()
     {
         JackTokenizer.Advance();
+
+        // check if the line is keyword
+        // Also, if the keyword is int|keyword|boolean
+        // if yes, the corresponding token is returned
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && (JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.INT || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.CHAR || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.BOOLEAN))
         {
             return JackTokenizer.CurrentToken();
         }
+
+        // checks if the token is an identifier or not
+        // if yes, the corresponding token is returned
         if (JackTokenizer.token() == JackTokenizer.TYPE.IDENTIFIER)
         {
             return JackTokenizer.Identifier();
         }
+        
+        // if all the above is failed, an error is being showed.
         error("in|char|boolean|className");
+        
         return "";
     }
     public void ClassCompiler()
@@ -103,14 +113,18 @@ public class CompilationEngine
             error("Keywords");
         }
 
-        //next is subroutineDec
+        //next is subroutine
+        // checks if the keywords are contructor| function| Method
+        // if yes, it goes to the method pointer
         if (JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.CONSTRUCTOR || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.FUNCTION || JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.METHOD)
         {
             JackTokenizer.Pointer();
             return;
         }
 
-        //classVarDec exists
+        //classVariable 
+        // checks if the keyword is static or field
+        // if not, it shows the error
         if (JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.STATIC && JackTokenizer.KeyWords() != JackTokenizer.KEYWORD.FIELD)
         {
             error("static or field");
@@ -120,6 +134,8 @@ public class CompilationEngine
         String type = "";
         String name = "";
 
+        // for class variable
+        // checks if it is static or field and store it as "kind"
         switch (JackTokenizer.KeyWords())
         {
             case STATIC:
@@ -127,7 +143,6 @@ public class CompilationEngine
                 kind = Symbol.KIND.STATIC;
                 break;
             }
-
             case FIELD:
             {   
                 kind = Symbol.KIND.FIELD;
