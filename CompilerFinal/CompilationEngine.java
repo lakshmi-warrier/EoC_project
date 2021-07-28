@@ -81,7 +81,7 @@ public class CompilationEngine
         CompilerClassVarDec();
         CompileSubroutine();
 
-        //checks if it has closed bracker }
+        //checks if it has closed bracker '}'
         Symbol('}');
 
         // checks if the code have more token or not
@@ -197,10 +197,10 @@ public class CompilationEngine
     static void CompileSubroutine()
     {
 
-        //determine whether there is a subroutine, next can be a '}'
+        //checks if the line has '}'
         JackTokenizer.Advance();
 
-        //next is a '}'
+        //next is a '}', then it returns
         if (JackTokenizer.token() == JackTokenizer.TYPE.SYMBOL && JackTokenizer.Symbol() == '}')
         {
             JackTokenizer.Pointer();
