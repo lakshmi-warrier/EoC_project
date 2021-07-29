@@ -3,7 +3,7 @@ import java.util.*;
 class Symbol 
 {
     //enum : data type which contains a fixed set of constants
-    
+
     public static enum KIND 
     {
         STATIC, FIELD, ARG, VAR, NONE
@@ -19,10 +19,10 @@ class Symbol
         this.kind = kind;
         this.index = index;
     }
-
-
+    
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return "Symbol{" + "type='" + type + '\'' + ", kind=" + kind + ", index=" + index + '}';
     }
 }

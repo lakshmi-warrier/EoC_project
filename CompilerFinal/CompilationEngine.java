@@ -8,6 +8,7 @@ public class CompilationEngine
     static String Class;
     static String Subroutine;
     static int LabelCount;
+
     public CompilationEngine(File inFile, File outFile) 
     {
         tokenizer = new JackTokenizer(inFile);
@@ -15,6 +16,7 @@ public class CompilationEngine
         symbolTable = new SymbolTable();
         LabelCount = 0;
     }
+
     static String Function()
     {
         if (Class.length() != 0 && Subroutine.length() !=0)
@@ -267,9 +269,13 @@ public class CompilationEngine
         //checks if there is an closing bracket ')'
         Symbol(')');
 
-        //subroutineBody
-        compileSubroutineMain(keyword); // goes to the method compileSubroutineMain()
-        CompileSubroutine(); //goes to method compileSubroutine()
+        //SUBROUTINE BODY
+
+        // goes to the method compileSubroutineMain()
+        compileSubroutineMain(keyword); 
+
+        //goes to method compileSubroutine()
+        CompileSubroutine(); 
 
     }
     static void compileSubroutineMain(JackTokenizer.KEYWORD keyword)
@@ -458,6 +464,7 @@ public class CompilationEngine
                 break;
             }
         }
+
         // the method is being called unless ';' is being found
         VarDec();
     }
@@ -475,17 +482,24 @@ public class CompilationEngine
     }
     static void Let()
     {
-        //varName
+        //gets the varName
         JackTokenizer.Advance();
 
+        //checks if the token is an identifier or not
+        //if not the error in the variable name will be shown
         if (JackTokenizer.token() != JackTokenizer.TYPE.IDENTIFIER)
         {
             error("varName");
         }
+
+        // the current token is saved as varname
         String varName = JackTokenizer.Identifier();
 
-        //'[' or '='
+        //checks the next token
         JackTokenizer.Advance();
+
+        // checks if the token is a symbol or not
+        // if not a symbol, an error will be shown
         if (JackTokenizer.token() != JackTokenizer.TYPE.SYMBOL || (JackTokenizer.Symbol() != '[' && JackTokenizer.Symbol() != '='))
         {
             error("'['|'='");
@@ -509,13 +523,15 @@ public class CompilationEngine
             //base+offset
             VMWriter.writeArithmetic(VMWriter.COMMAND.ADD);
         }
-
-        if (expExist) JackTokenizer.Advance();
+        if (expExist) 
+        {
+            JackTokenizer.Advance();
+        }
 
         //expression
         Expression();
 
-        //';'
+        //checks if the token is ';'
         Symbol(';');
 
         if (expExist)
@@ -626,6 +642,7 @@ public class CompilationEngine
             //checks if the symbol ';' is present
             Symbol(';');
         }
+
         // the vm code for return is being written to the vm file
         VMWriter.writeReturn();
     }
@@ -662,7 +679,10 @@ public class CompilationEngine
         //check if there is 'else'
         VMWriter.writeLabel(elseLabel);
         
+        //gets the next token
         JackTokenizer.Advance();
+
+        //checks if the token is keyword and the keyword is "else"
         if (JackTokenizer.token() == JackTokenizer.TYPE.KEYWORD && JackTokenizer.KeyWords() == JackTokenizer.KEYWORD.ELSE)
         {
             //checks if the opening bracket is present or not
@@ -678,6 +698,8 @@ public class CompilationEngine
         {
             JackTokenizer.Pointer();
         }
+
+        //vm code for label is being written onto vm file
         VMWriter.writeLabel(endLabel);
     }
     static void Term()
