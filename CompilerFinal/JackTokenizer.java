@@ -5,10 +5,15 @@ import java.util.regex.Pattern;
 
 public class JackTokenizer 
 {
+    static enum TYPE 
+    {
+        KEYWORD, SYMBOL, IDENTIFIER, INTEGERCONSTANT, STRINGCONSTANT, NONE
+    };
 
-    static enum TYPE {KEYWORD, SYMBOL, IDENTIFIER, INTEGERCONSTANT, STRINGCONSTANT, NONE};
-
-    static enum KEYWORD {CLASS, METHOD, FUNCTION, CONSTRUCTOR, INT, BOOLEAN,CHAR, VOID, VAR, STATIC, FIELD, LET, DO, IF, ELSE, WHILE, RETURN, TRUE, FALSE, NULL, THIS};
+    static enum KEYWORD 
+    {
+        CLASS, METHOD, FUNCTION, CONSTRUCTOR, INT, BOOLEAN,CHAR, VOID, VAR, STATIC, FIELD, LET, DO, IF, ELSE, WHILE, RETURN, TRUE, FALSE, NULL, THIS
+    };
 
     static String currentToken;
     static TYPE currentTokenType;
@@ -28,7 +33,6 @@ public class JackTokenizer
     //static block initialises the class variables
     static 
     {
-
         keyWordMap.put("class",KEYWORD.CLASS);
         keyWordMap.put("constructor",KEYWORD.CONSTRUCTOR);
         keyWordMap.put("function",KEYWORD.FUNCTION);
