@@ -8,9 +8,11 @@ public class SymbolTable
     public SymbolTable() 
     {
         //for STATIC, FIELD
+        //scope of these variables would be class
         classSymbols = new HashMap<String, Symbol>();
 
         //for ARG, VAR
+        //scope of these variables would be a subroutine
         subroutineSymbols = new HashMap<String, Symbol>();
 
         indices = new HashMap<Symbol.KIND, Integer>();
@@ -47,7 +49,7 @@ public class SymbolTable
             int index = indices.get(kind);
             Symbol symbol = new Symbol(type,kind,index);
 
-            // the static|field are being stored into hashamp named indices with an index number
+            // the static|field are being stored into hashmap named indices with an index number
             indices.put(kind,index+1);
 
             //the identifier and the symbol are being stored into the hashamp named classsymbols symbol
@@ -68,6 +70,7 @@ public class SymbolTable
         }
         return Symbol.KIND.NONE;
     }
+
     static String typeOf(String name)
     {
         Symbol symbol = lookUp(name);
@@ -92,10 +95,12 @@ public class SymbolTable
     {
         if (classSymbols.get(name) != null)
         {
+            //if the variable is a class variable
             return classSymbols.get(name);
         }
         else if (subroutineSymbols.get(name) != null)
         {
+            //if the variable's scope is current subroutine
             return subroutineSymbols.get(name);
         }
         else 

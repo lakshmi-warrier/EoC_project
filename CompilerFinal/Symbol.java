@@ -1,6 +1,9 @@
 public class Symbol 
 {
-    public static enum KIND {STATIC, FIELD, ARG, VAR, NONE};
+    public static enum KIND 
+    {
+        STATIC, FIELD, ARG, VAR, NONE
+    };
 
     String type;
     KIND kind;
@@ -12,27 +15,24 @@ public class Symbol
         this.kind = kind;
         this.index = index;
     }
+
     public String getType() 
     {
         return type;
     }
+
     public KIND getKind() 
     {
         return kind;
     }
+
     public int getIndex() 
     {
         return index;
     }
-    
-    @Override
 
-    public String toString() 
-    {
-        return "Symbol{" +
-                "type='" + type + '\'' +
-                ", kind=" + kind +
-                ", index=" + index +
-                '}';
+    @Override
+    public String toString() {
+        return "Symbol{" + "type='" + type + '\'' + ", kind=" + kind + ", index=" + index + '}';
     }
 }
