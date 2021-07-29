@@ -25,6 +25,7 @@ public class JackTokenizer
     static HashMap<String,KEYWORD> keyWordMap = new HashMap<String, KEYWORD>();
     static HashSet<Character> opSet = new HashSet<Character>();
 
+    //static block initialises the class variables
     static 
     {
 
@@ -73,13 +74,17 @@ public class JackTokenizer
             {
                 line = Comments(scanner.nextLine()).trim();
 
+                //considering a line only if the line is not null
                 if (line.length() > 0) 
                 {
                     preprocessed += line + "\n";
                 }
             }
+
+            //handling block comments "/* */"
             preprocessed = BlockComments(preprocessed).trim();
 
+            //initialise the regex for tokenPatterns so that later, only tokens are added to the arraylist of tokens
             Check();
 
             Matcher m = tokenPatterns.matcher(preprocessed);
@@ -88,6 +93,7 @@ public class JackTokenizer
 
             while (m.find())
             {
+                //add matching groups (string) to the arraylist
                 tokens.add(m.group());
             }
         } 
@@ -101,12 +107,14 @@ public class JackTokenizer
     static void Check()
     {
         keyWordReg = "";
+
         // to set the keywords like static|void|method|var|constructor|false|this|do|while|int|boolean|field|null|else|function|char|true|let|class|if|return|
         for (String seg: keyWordMap.keySet())
         {
             keyWordReg += seg + "|";
         }
 
+        //a token should be one of symbol, integer, string or identifier
         symbolReg = "[\\&\\*\\+\\(\\)\\.\\/\\,\\-\\]\\;\\~\\}\\|\\{\\>\\=\\[\\<]";
         intReg = "[0-9]+";
         strReg = "\"[^\"\n]*\"";
@@ -120,7 +128,7 @@ public class JackTokenizer
     }
     static void Advance()
     {
-        // checks if the the tokken type matches with the keyword, symbol, integer constant, string constant or identifier
+        // checks if the the token type matches with the keyword, symbol, integer constant, string constant or identifier
         if (HasMoreTokens()) 
         {
             currentToken = tokens.get(pointer);
@@ -228,6 +236,7 @@ public class JackTokenizer
     }
     static void Pointer()
     {
+        //sets currentToken - the element that's at pointer
         if (pointer > 0) 
         {
             pointer--;
@@ -274,12 +283,16 @@ public class JackTokenizer
         }
         String result = strIn;
         int endIndex = strIn.indexOf("*/");
+
+        //loop runs till there are no /* and */ left
         while(startIndex != -1)
         {
             if (endIndex == -1)
             {
                 return strIn.substring(0,startIndex - 1);
             }
+
+            //avoiding the contents in the block
             result = result.substring(0,startIndex) + result.substring(endIndex + 2);
             startIndex = result.indexOf("/*");
             endIndex = result.indexOf("*/");
