@@ -29,6 +29,8 @@ public class SymbolTable
 {
     static HashMap<String,Symbol> classSymbols;//for STATIC, FIELD
     static HashMap<String,Symbol> subroutineSymbols;//for ARG, VAR
+
+    //a table to keep track of the indices of both class and subroutine variables
     static HashMap<Symbol.KIND,Integer> indices;
 
     public SymbolTable() 
@@ -62,10 +64,10 @@ public class SymbolTable
             int index = indices.get(kind);
             Symbol symbol = new Symbol(type,kind,index);
 
-            // the arg|var are being stored into hashamp named indices with an index number
+            // the arg|var are being stored into hashmap named indices with an index number
             indices.put(kind,index+1); 
 
-            //the identifier and the symbol are being stored into the hashamp named subroutine symbol
+            //the identifier and the symbol are being stored into the hashmap named subroutine symbol
             subroutineSymbols.put(name,symbol);
         }
 
@@ -78,7 +80,7 @@ public class SymbolTable
             // the static|field are being stored into hashmap named indices with an index number
             indices.put(kind,index+1);
 
-            //the identifier and the symbol are being stored into the hashamp named classsymbols symbol
+            //the identifier and the symbol are being stored into the hashmap named classSymbols 
             classSymbols.put(name,symbol);
         }
     }
