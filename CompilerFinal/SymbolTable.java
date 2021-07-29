@@ -18,20 +18,6 @@ class Symbol
         this.index = index;
     }
 
-    public String getType() 
-    {
-        return type;
-    }
-
-    public KIND getKind() 
-    {
-        return kind;
-    }
-
-    public int getIndex() 
-    {
-        return index;
-    }
 
     @Override
     public String toString() {
@@ -106,7 +92,7 @@ public class SymbolTable
 
         if (symbol != null) 
         {
-            return symbol.getKind();
+            return symbol.kind;
         }
         return Symbol.KIND.NONE;
     }
@@ -117,7 +103,7 @@ public class SymbolTable
 
         if (symbol != null) 
         {
-            return symbol.getType();
+            return symbol.type;
         }
         return "";
     }
@@ -127,7 +113,7 @@ public class SymbolTable
         
         if (symbol != null)
         {
-            return symbol.getIndex();
+            return symbol.index;
         }
         return -1;
     }
