@@ -68,12 +68,12 @@ call Output.println 0
 pop temp 0
 call Output.println 0
 pop temp 0
-label WHILE_EXP0
+label LABEL_1 
 push local 2
 push local 1
-lt
-not
-if-goto WHILE_END0
+lt  
+not  
+if-goto LABEL_0 
 push constant 15
 call String.new 1
 push constant 69
@@ -114,10 +114,10 @@ call Queue.enqueue 2
 pop temp 0
 push local 2
 push constant 1
-add
+add  
 pop local 2
-goto WHILE_EXP0
-label WHILE_END0
+goto LABEL_1 
+label LABEL_0 
 call Output.println 0
 pop temp 0
 push constant 19
@@ -296,4 +296,4 @@ push local 4
 call Queue.print 1
 pop temp 0
 push constant 0
-return
+return  

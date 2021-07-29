@@ -192,7 +192,7 @@ push local 3
 call String.length 1
 push local 2
 call String.length 1
-add
+add  
 call String.new 1
 pop local 5
 push local 2
@@ -444,7 +444,7 @@ push constant 32
 call String.appendChar 2
 call Keyboard.readInt 1
 push constant 1
-sub
+sub  
 pop local 6
 push constant 28
 call String.new 1
@@ -506,11 +506,11 @@ push constant 32
 call String.appendChar 2
 call Keyboard.readInt 1
 push constant 1
-sub
+sub  
 pop local 7
 push local 7
 push local 6
-sub
+sub  
 call String.new 1
 pop local 4
 push local 2
@@ -788,4 +788,4 @@ push local 3
 call StringUtils.equals 2
 pop temp 0
 push constant 0
-return
+return  
