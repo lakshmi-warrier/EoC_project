@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 public class JackTokenizer 
 {
+    //enum : data type which contains a fixed set of constants
+    
     static enum TYPE 
     {
         KEYWORD, SYMBOL, IDENTIFIER, INTEGERCONSTANT, STRINGCONSTANT, NONE

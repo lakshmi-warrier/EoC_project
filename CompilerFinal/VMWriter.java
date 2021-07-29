@@ -3,8 +3,17 @@ import java.util.*;
 
 public class VMWriter 
 {
-    static enum SEGMENT {CONST,ARG,LOCAL,STATIC,THIS,THAT,POINTER,TEMP,NONE};
-    static enum COMMAND {ADD,SUB,NEG,EQ,GT,LT,AND,OR,NOT};
+    //enum : data type which contains a fixed set of constants
+    
+    static enum SEGMENT 
+    {
+        CONST,ARG,LOCAL,STATIC,THIS,THAT,POINTER,TEMP,NONE
+    };
+
+    static enum COMMAND 
+    {
+        ADD,SUB,NEG,EQ,GT,LT,AND,OR,NOT
+    };
 
     static HashMap<SEGMENT,String> segmentStringHashMap = new HashMap<SEGMENT, String>();
     static HashMap<COMMAND,String> commandStringHashMap = new HashMap<COMMAND, String>();

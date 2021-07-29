@@ -2,6 +2,8 @@ import java.util.*;
 
 class Symbol 
 {
+    //enum : data type which contains a fixed set of constants
+    
     public static enum KIND 
     {
         STATIC, FIELD, ARG, VAR, NONE
