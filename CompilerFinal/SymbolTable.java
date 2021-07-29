@@ -1,4 +1,30 @@
 import java.util.*;
+
+class Symbol 
+{
+    public static enum KIND 
+    {
+        STATIC, FIELD, ARG, VAR, NONE
+    };
+
+    String type;
+    KIND kind;
+    int index;
+
+    public Symbol(String type, KIND kind, int index) 
+    {
+        this.type = type;
+        this.kind = kind;
+        this.index = index;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Symbol{" + "type='" + type + '\'' + ", kind=" + kind + ", index=" + index + '}';
+    }
+}
+
 public class SymbolTable 
 {
     static HashMap<String,Symbol> classSymbols;//for STATIC, FIELD
@@ -66,7 +92,7 @@ public class SymbolTable
 
         if (symbol != null) 
         {
-            return symbol.getKind();
+            return symbol.kind;
         }
         return Symbol.KIND.NONE;
     }
@@ -77,7 +103,7 @@ public class SymbolTable
 
         if (symbol != null) 
         {
-            return symbol.getType();
+            return symbol.type;
         }
         return "";
     }
@@ -87,7 +113,7 @@ public class SymbolTable
         
         if (symbol != null)
         {
-            return symbol.getIndex();
+            return symbol.index;
         }
         return -1;
     }
