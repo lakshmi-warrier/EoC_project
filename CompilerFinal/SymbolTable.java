@@ -18,6 +18,7 @@ class Symbol
         this.index = index;
     }
 
+
     @Override
     public String toString() {
         return "Symbol{" + "type='" + type + '\'' + ", kind=" + kind + ", index=" + index + '}';
