@@ -77,32 +77,7 @@ class Queue
 			let front = front +1;	
 		}
 		return;
-	}
-
-	method void dequeuePrint()
-	{
-		if((rear=-1) & (front =-1))
-		{
-			do Output.printString(" NO ELEMENT PRESENT");
-			do Output.println();
-		}
-		if(front=rear)
-		{
-			//let elem=arr[front];
-			let front=-1;
-			let rear=-1;
-			//do Output.printString("Deleted Element is - ");
-			//do Output.printInt(arr[elem]);
-		}
-		else
-		{
-			//do Output.printString("Deleted Element is - ");
-			//do Output.printInt(arr[front]);
-			let front = front +1;	
-		}
-		return;
-	}
-	
+	}	
 	method void print()
 	{
 		var int i;
