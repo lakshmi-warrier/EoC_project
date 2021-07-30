@@ -375,6 +375,87 @@ pop this 1
 label LABEL_9 
 push constant 0
 return  
+function Queue.dequeuePrint 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 1
+neg  
+eq  
+push this 1
+push constant 1
+neg  
+eq  
+and  
+not  
+if-goto LABEL_10 
+push constant 19
+call String.new 1
+push constant 32
+call String.appendChar 2
+push constant 78
+call String.appendChar 2
+push constant 79
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 76
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 77
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 78
+call String.appendChar 2
+push constant 84
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 80
+call String.appendChar 2
+push constant 82
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 83
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 78
+call String.appendChar 2
+push constant 84
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+call Output.println 0
+pop temp 0
+goto LABEL_11 
+label LABEL_10 
+label LABEL_11 
+push this 1
+push this 2
+eq  
+not  
+if-goto LABEL_12 
+push constant 1
+neg  
+pop this 1
+push constant 1
+neg  
+pop this 2
+goto LABEL_13 
+label LABEL_12 
+push this 1
+push constant 1
+add  
+pop this 1
+label LABEL_13 
+push constant 0
+return  
 function Queue.print 2
 push argument 0
 pop pointer 0
@@ -390,7 +471,7 @@ push constant 1
 neg  
 eq  
 not  
-if-goto LABEL_10 
+if-goto LABEL_14 
 push constant 15
 call String.new 1
 push constant 32
@@ -427,8 +508,8 @@ call Output.printString 1
 pop temp 0
 call Output.println 0
 pop temp 0
-goto LABEL_11 
-label LABEL_10 
+goto LABEL_15 
+label LABEL_14 
 push constant 12
 call String.new 1
 push constant 69
@@ -457,7 +538,7 @@ push constant 32
 call String.appendChar 2
 call Output.printString 1
 pop temp 0
-label LABEL_13 
+label LABEL_17 
 push this 2
 push constant 1
 neg  
@@ -469,7 +550,7 @@ eq
 and  
 not  
 not  
-if-goto LABEL_12 
+if-goto LABEL_16 
 push this 0
 push this 1
 add  
@@ -488,8 +569,8 @@ pop temp 0
 push local 1
 call Queue.dequeuePrint 1
 pop temp 0
-goto LABEL_13 
-label LABEL_12 
-label LABEL_11 
+goto LABEL_17 
+label LABEL_16 
+label LABEL_15 
 push constant 0
 return  
